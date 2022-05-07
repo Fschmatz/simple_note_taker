@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:linkwell/linkwell.dart';
 import 'package:share/share.dart';
 import '../class/note.dart';
 import '../db/note_dao.dart';
@@ -65,7 +66,7 @@ class _NoteTileState extends State<NoteTile> {
                     ),
                     onTap: () {
                       Navigator.of(context).pop();
-                      Share.share(widget.note.title +"\n"+widget.note.text);
+                      Share.share(widget.note.title + "\n" + widget.note.text);
                     },
                   ),
                   const Divider(),
@@ -135,12 +136,34 @@ class _NoteTileState extends State<NoteTile> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: openBottomMenu,
-      title: Text(widget.note.title),
-      subtitle: widget.note.text.isNotEmpty
-          ? Text(widget.note.text)
-          : null,
+    return Column(
+      children: [
+        ListTile(
+          contentPadding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+          onTap: openBottomMenu,
+          title: Text(widget.note.title),
+          subtitle: widget.note.text.isNotEmpty
+              ? LinkWell(
+                  widget.note.text,
+                  linkStyle: TextStyle(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .secondary
+                        .withOpacity(0.8),
+                    fontSize: 14,
+                    decoration: TextDecoration.underline,
+                  ),
+              style: TextStyle(
+                  fontSize: 14,
+                  color: Theme.of(context)
+                      .textTheme
+                      .headline6!
+                      .color!
+                      .withOpacity(0.7))
+                )
+              : null,
+        ),
+      ],
     );
   }
 }

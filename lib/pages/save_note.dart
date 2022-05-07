@@ -78,7 +78,6 @@ class _SaveNoteState extends State<SaveNote> {
           appBar: AppBar(
             title: const Text('Save Note'),
             actions: [
-
               IconButton(
                 icon: const Icon(Icons.save_outlined),
                 tooltip: 'Save',

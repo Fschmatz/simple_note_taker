@@ -48,7 +48,7 @@ class _NoteListState extends State<NoteList> {
                   children: [
                     ListView.separated(
                       separatorBuilder: (BuildContext context, int index) =>
-                          const Divider(),
+                          const Divider(height: 0,),
                       physics: const ScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: playlists.length,

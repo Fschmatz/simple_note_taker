@@ -9,7 +9,7 @@ ThemeData light = ThemeData(
     background: const Color(0xFFFFFFFF),
     primary: Colors.teal.shade400,
     onPrimary: const Color(0xFFFFFFFF),
-    secondary: Colors.teal.shade400,
+    secondary: Colors.teal,
   ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     backgroundColor: Colors.teal.shade400,
@@ -24,7 +24,7 @@ ThemeData light = ThemeData(
     ),
   ),
   appBarTheme: const AppBarTheme(
-      color: Color(0xFFFFFFFF),
+      color: Color(0xFFFAFBFB),
       elevation: 0,
       iconTheme: IconThemeData(color: Color(0xFF000000)),
       titleTextStyle: TextStyle(
@@ -60,7 +60,7 @@ ThemeData light = ThemeData(
         side: BorderSide(color: Colors.grey.shade800.withOpacity(0.3))),
   ),
   bottomSheetTheme: const BottomSheetThemeData(
-    backgroundColor: Color(0xFFFFFFFF),
+    backgroundColor: Color(0xFFF7F7FB),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
@@ -84,13 +84,13 @@ ThemeData light = ThemeData(
 ThemeData dark = ThemeData(
   useMaterial3: true,
   brightness: Brightness.dark,
-  primaryColor: const Color(0xFF1B1C1F),
-  scaffoldBackgroundColor: const Color(0xFF1B1C1F),
+  primaryColor: const Color(0xFF202123),
+  scaffoldBackgroundColor: const Color(0xFF202123),
   colorScheme: const ColorScheme.dark(
-    background: Color(0xFF1B1C1F),
+    background: Color(0xFF202123),
     primary: Color(0xFF6AB29E),
     onPrimary: Color(0xFF00382C),
-    secondary: Color(0xFF6AB29E),
+    secondary: Color(0xFF7EE2C6),
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
     backgroundColor: Color(0xFF6AB29E),
@@ -99,7 +99,7 @@ ThemeData dark = ThemeData(
     ),
   ),
   appBarTheme: const AppBarTheme(
-      color: Color(0xFF1B1C1F),
+      color: Color(0xFF262A2C),
       elevation: 0,
       iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
       titleTextStyle: TextStyle(
@@ -111,13 +111,13 @@ ThemeData dark = ThemeData(
     ),
   ),
   dialogTheme: const DialogTheme(
-    backgroundColor: Color(0xFF1B1C1F),
+    backgroundColor: Color(0xFF202123),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(28)),
     ),
   ),
   bottomSheetTheme: const BottomSheetThemeData(
-    backgroundColor: Color(0xFF1B1C1F),
+    backgroundColor: Color(0xFF2A2D2F),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
@@ -125,7 +125,7 @@ ThemeData dark = ThemeData(
   ),
   chipTheme: ChipThemeData(
     elevation: 0,
-    backgroundColor: const Color(0xFF1B1C1F),
+    backgroundColor: const Color(0xFF202123),
     shape: StadiumBorder(
         side: BorderSide(color: Colors.grey.shade800.withOpacity(0.3))),
   ),

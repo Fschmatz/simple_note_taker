@@ -19,7 +19,7 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
 
   @override
   void initState() {
-    controllerNoteTitle.text = widget.sharedText!;
+    controllerNoteText.text = widget.sharedText!;
     super.initState();
   }
 
