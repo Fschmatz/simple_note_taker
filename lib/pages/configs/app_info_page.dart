@@ -78,8 +78,7 @@ class AppInfoPage extends StatelessWidget {
           const ListTile(
             leading: Icon(Icons.messenger_outline),
             title: Text(
-              "A strange art – music – the most poetic and precise of all the arts, vague as a dream and precise as algebra.",
-            ),
+              "The mind is not a vessel to be filled, but a fire to be kindled."),
           ),
         ]));
   }

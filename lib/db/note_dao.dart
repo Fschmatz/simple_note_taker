@@ -9,10 +9,11 @@ class NoteDao {
   static const _databaseName = "SimpleNoteTaker.db";
   static const _databaseVersion = 1;
 
-  static const table = 'playlist';
+  static const table = 'notes';
   static const columnIdNote = 'id_note';
   static const columnTitle = 'title';
   static const columnText = 'text';
+  static const columnArchived = 'archived';
 
   static Database? _database;
   Future<Database> get database async =>
@@ -34,7 +35,8 @@ class NoteDao {
           CREATE TABLE $table (
             $columnIdNote INTEGER PRIMARY KEY,
             $columnTitle TEXT NOT NULL,
-            $columnText TEXT
+            $columnText TEXT,
+            $columnArchived INTEGER NOT NULL   
           )
           ''');
   }
@@ -47,6 +49,11 @@ class NoteDao {
   Future<List<Map<String, dynamic>>> queryAllRowsDesc() async {
     Database db = await instance.database;
     return await db.rawQuery('SELECT * FROM $table ORDER BY id_note DESC');
+  }
+
+  Future<List<Map<String, dynamic>>> queryAllRowsDescArchive(int archivedValue) async {
+    Database db = await instance.database;
+    return await db.rawQuery('SELECT * FROM $table WHERE $columnArchived = $archivedValue ORDER BY id_note DESC');
   }
 
   Future<int> insert(Map<String, dynamic> row) async {

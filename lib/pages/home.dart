@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-                title: const Text('Playlist Saver'),
+                title: const Text('Simple Note Taker'),
                 pinned: false,
                 floating: true,
                 snap: true,
@@ -65,12 +65,12 @@ class _HomeState extends State<Home> {
         },
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.queue_music_outlined),
+            icon: Icon(Icons.text_snippet_outlined),
             selectedIcon: Icon(
-              Icons.queue_music,
+              Icons.text_snippet,
               color: Colors.black87,
             ),
-            label: 'Listen',
+            label: 'Notes',
           ),
           NavigationDestination(
             icon: Icon(Icons.archive_outlined),

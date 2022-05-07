@@ -1,28 +1,34 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../class/note.dart';
 import '../db/note_dao.dart';
 import '../pages/edit_note.dart';
 
-class PlaylistTile extends StatefulWidget {
+class NoteTile extends StatefulWidget {
   @override
-  _PlaylistTileState createState() => _PlaylistTileState();
+  _NoteTileState createState() => _NoteTileState();
 
-  Note playlist;
+  Note note;
   Function() refreshHome;
 
-  PlaylistTile({Key? key, required this.playlist, required this.refreshHome})
+  NoteTile({Key? key, required this.note, required this.refreshHome})
       : super(key: key);
 }
 
-class _PlaylistTileState extends State<PlaylistTile> {
-
-
+class _NoteTileState extends State<NoteTile> {
   void _delete() async {
-    final playlists = NoteDao.instance;
-    final deleted = await playlists.delete(widget.playlist.idNote);
+    final notes = NoteDao.instance;
+    final deleted = await notes.delete(widget.note.idNote);
+  }
+
+  Future<void> _archiveNote() async {
+    final notes = NoteDao.instance;
+    Map<String, dynamic> row = {
+      NoteDao.columnIdNote: widget.note.idNote,
+      NoteDao.columnArchived: widget.note.archived == 0 ? 1 : 0,
+    };
+    final update = await notes.update(row);
   }
 
   void openBottomMenu() {
@@ -35,13 +41,31 @@ class _PlaylistTileState extends State<PlaylistTile> {
               child: Wrap(
                 children: <Widget>[
                   ListTile(
+                    leading: widget.note.archived == 0
+                        ? const Icon(Icons.archive_outlined)
+                        : const Icon(Icons.unarchive_outlined),
+                    title: widget.note.archived == 0
+                        ? const Text(
+                            "Archive",
+                          )
+                        : const Text(
+                            "Unarchive",
+                          ),
+                    onTap: () {
+                      _archiveNote();
+                      widget.refreshHome();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  const Divider(),
+                  ListTile(
                     leading: const Icon(Icons.share_outlined),
                     title: const Text(
                       "Share",
                     ),
                     onTap: () {
                       Navigator.of(context).pop();
-                     // Share.share(widget.playlist.link);
+                      Share.share(widget.note.title +"\n"+widget.note.text);
                     },
                   ),
                   const Divider(),
@@ -56,7 +80,7 @@ class _PlaylistTileState extends State<PlaylistTile> {
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) => EditNote(
-                              note: widget.playlist,
+                              note: widget.note,
                               refreshHome: widget.refreshHome,
                             ),
                           ));
@@ -66,7 +90,7 @@ class _PlaylistTileState extends State<PlaylistTile> {
                   ListTile(
                     leading: const Icon(Icons.delete_outline_outlined),
                     title: const Text(
-                      "Delete playlist",
+                      "Delete",
                       style: TextStyle(fontSize: 16),
                     ),
                     onTap: () {
@@ -112,9 +136,11 @@ class _PlaylistTileState extends State<PlaylistTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      //onTap: _launchLink,
-      onLongPress: openBottomMenu,
-      title: Text('oi'),
+      onTap: openBottomMenu,
+      title: Text(widget.note.title),
+      subtitle: widget.note.text.isNotEmpty
+          ? Text(widget.note.text)
+          : null,
     );
   }
 }

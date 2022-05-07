@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../app.dart';
+import '../db/note_dao.dart';
 
 class ShareSaveNote extends StatefulWidget {
   @override
@@ -12,35 +14,29 @@ class ShareSaveNote extends StatefulWidget {
 }
 
 class _ShareSaveNoteState extends State<ShareSaveNote> {
-  TextEditingController controllerPlaylistTitle = TextEditingController();
-  TextEditingController controllerArtist = TextEditingController();
-  TextEditingController controllerTags = TextEditingController();
-  TextEditingController controllerLink = TextEditingController();
-
+  TextEditingController controllerNoteTitle = TextEditingController();
+  TextEditingController controllerNoteText = TextEditingController();
 
   @override
   void initState() {
-    controllerLink.text = widget.sharedText!;
+    controllerNoteTitle.text = widget.sharedText!;
     super.initState();
   }
 
-  /*Future<void> _savePlaylist() async {
+  Future<void> _saveNote() async {
+    final dbPlaylist = NoteDao.instance;
+
     Map<String, dynamic> row = {
-      PlaylistDao.columnLink: controllerLink.text,
-      PlaylistDao.columnTitle: controllerPlaylistTitle.text,
-      PlaylistDao.columnArchived: 0,
-      PlaylistDao.columnArtist: controllerArtist.text,
-      PlaylistDao.columnTags: controllerTags.text,
+      NoteDao.columnTitle: controllerNoteTitle.text,
+      NoteDao.columnText: controllerNoteText.text,
+      NoteDao.columnArchived: 0,
     };
     final id = await dbPlaylist.insert(row);
-  }*/
+  }
 
   String checkErrors() {
     String erros = "";
-    if (controllerLink.text.isEmpty) {
-      erros += "Insert link\n";
-    }
-    if (controllerPlaylistTitle.text.isEmpty) {
+    if (controllerNoteTitle.text.isEmpty) {
       erros += "Insert title\n";
     }
     return erros;
@@ -81,15 +77,14 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
 
   @override
   Widget build(BuildContext context) {
-
     final Color? bottomOverlayColor =
         Theme.of(context).bottomNavigationBarTheme.backgroundColor;
     final Color? topOverlayColor =
         Theme.of(context).appBarTheme.backgroundColor;
     final Brightness iconBrightness =
-    Theme.of(context).brightness == Brightness.light
-        ? Brightness.dark
-        : Brightness.light;
+        Theme.of(context).brightness == Brightness.light
+            ? Brightness.dark
+            : Brightness.light;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
@@ -106,32 +101,21 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
           },
           child: Scaffold(
               appBar: AppBar(
-                title: const Text('Save Shared Playlist'),
+                title: const Text('Save Shared Note'),
                 actions: [
-                  IconButton(
-                    icon: const Icon(Icons.refresh_outlined),
-                    tooltip: 'Load data',
-                    onPressed: () {
-
-                    },
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
                   IconButton(
                     icon: const Icon(Icons.save_outlined),
                     tooltip: 'Save',
                     onPressed: () {
                       if (checkErrors().isEmpty) {
-                        /*_savePlaylist().then((v) => {
-                              Navigator.of(context).pop(),
+                        _saveNote().then((v) => {
                               Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const App()),
-                                (Route<dynamic> route) => false,
-                              )
-                            });*/
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const App()),
+                                  ModalRoute.withName('/'))
+                            });
                       } else {
                         showAlertDialogErrors(context);
                       }
@@ -140,31 +124,6 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
                 ],
               ),
               body: ListView(children: [
-
-                ListTile(
-                  title: Text("Link",
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Theme.of(context).colorScheme.primary)),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: TextField(
-                    minLines: 1,
-                    maxLines: 4,
-                    maxLength: 500,
-                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                    textCapitalization: TextCapitalization.sentences,
-                    keyboardType: TextInputType.name,
-                    controller: controllerLink,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.link_outlined),
-                      helperText: "* Required",
-                      counterText: "",
-                    ),
-                  ),
-                ),
                 ListTile(
                   title: Text("Title",
                       style: TextStyle(
@@ -176,12 +135,12 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextField(
                     minLines: 1,
-                    maxLines: 3,
+                    maxLines: 5,
                     maxLength: 300,
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     textCapitalization: TextCapitalization.sentences,
                     keyboardType: TextInputType.name,
-                    controller: controllerPlaylistTitle,
+                    controller: controllerNoteTitle,
                     decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.notes_outlined),
                       helperText: "* Required",
@@ -190,7 +149,7 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
                   ),
                 ),
                 ListTile(
-                  title: Text("Artist",
+                  title: Text("Text",
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -200,42 +159,16 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextField(
                     minLines: 1,
-                    maxLines: 2,
-                    maxLength: 300,
+                    maxLines: 6,
+                    maxLength: 500,
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     textCapitalization: TextCapitalization.sentences,
                     keyboardType: TextInputType.name,
-                    controller: controllerArtist,
+                    controller: controllerNoteText,
                     decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.notes_outlined),
+                      helperText: "* Required",
                       counterText: "",
-                      prefixIcon: Icon(
-                        Icons.person_outline_outlined,
-                      ),
-                    ),
-                  ),
-                ),
-                ListTile(
-                  title: Text("Tags",
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Theme.of(context).colorScheme.primary)),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: TextField(
-                    minLines: 1,
-                    maxLines: 2,
-                    maxLength: 300,
-                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                    textCapitalization: TextCapitalization.sentences,
-                    keyboardType: TextInputType.name,
-                    controller: controllerTags,
-                    decoration: const InputDecoration(
-                      counterText: "",
-                      prefixIcon: Icon(
-                        Icons.sell_outlined,
-                      ),
                     ),
                   ),
                 ),

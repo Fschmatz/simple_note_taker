@@ -16,12 +16,13 @@ class _SaveNoteState extends State<SaveNote> {
   TextEditingController controllerNoteTitle = TextEditingController();
   TextEditingController controllerNoteText = TextEditingController();
 
-  Future<void> _savePlaylist() async {
+  Future<void> _saveNote() async {
     final dbPlaylist = NoteDao.instance;
 
     Map<String, dynamic> row = {
       NoteDao.columnTitle: controllerNoteTitle.text,
       NoteDao.columnText: controllerNoteText.text,
+      NoteDao.columnArchived: 0,
     };
     final id = await dbPlaylist.insert(row);
   }
@@ -83,7 +84,7 @@ class _SaveNoteState extends State<SaveNote> {
                 tooltip: 'Save',
                 onPressed: () {
                   if (checkErrors().isEmpty) {
-                    _savePlaylist().then((v) => {
+                    _saveNote().then((v) => {
                           widget.refreshHome!(),
                           Navigator.of(context).pop(),
                         });
@@ -95,7 +96,6 @@ class _SaveNoteState extends State<SaveNote> {
             ],
           ),
           body: ListView(children: [
-
             ListTile(
               title: Text("Title",
                   style: TextStyle(
@@ -107,7 +107,7 @@ class _SaveNoteState extends State<SaveNote> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
                 minLines: 1,
-                maxLines: 3,
+                maxLines: 5,
                 maxLength: 300,
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 textCapitalization: TextCapitalization.sentences,
@@ -131,8 +131,8 @@ class _SaveNoteState extends State<SaveNote> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
                 minLines: 1,
-                maxLines: 2,
-                maxLength: 300,
+                maxLines: 6,
+                maxLength: 500,
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 textCapitalization: TextCapitalization.sentences,
                 keyboardType: TextInputType.name,
@@ -140,12 +140,11 @@ class _SaveNoteState extends State<SaveNote> {
                 decoration: const InputDecoration(
                   counterText: "",
                   prefixIcon: Icon(
-                    Icons.person_outline_outlined,
+                    Icons.notes_outlined,
                   ),
                 ),
               ),
             ),
-
             const SizedBox(
               height: 50,
             ),

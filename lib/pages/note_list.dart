@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:simple_note_taker/pages/save_note.dart';
-
 import '../class/note.dart';
 import '../db/note_dao.dart';
-import '../widgets/playlist_tile.dart';
+import '../widgets/note_tile.dart';
 
 class NoteList extends StatefulWidget {
   int archivedValue;
@@ -21,17 +20,17 @@ class _NoteListState extends State<NoteList> {
 
   @override
   void initState() {
-    getAllPlaylists(false);
+    getAllNotes(false);
     super.initState();
   }
 
-  void getAllPlaylists([bool refresh = true]) async {
+  void getAllNotes([bool refresh = true]) async {
     if (refresh) {
       setState(() {
         loading = true;
       });
     }
-    var resp = await dbPlaylist.queryAllRows();
+    var resp = await dbPlaylist.queryAllRowsDescArchive(widget.archivedValue);
     setState(() {
       loading = false;
       playlists = resp;
@@ -42,27 +41,26 @@ class _NoteListState extends State<NoteList> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 650),
+          duration: const Duration(milliseconds: 600),
           child: loading
               ? const Center(child: SizedBox.shrink())
               : ListView(
                   children: [
                     ListView.separated(
                       separatorBuilder: (BuildContext context, int index) =>
-                          const SizedBox(
-                        height: 4,
-                      ),
+                          const Divider(),
                       physics: const ScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: playlists.length,
                       itemBuilder: (context, int index) {
-                        return PlaylistTile(
+                        return NoteTile(
                           key: UniqueKey(),
-                          refreshHome: getAllPlaylists,
-                          playlist: Note(
+                          refreshHome: getAllNotes,
+                          note: Note(
                             idNote: playlists[index]['id_note'],
                             title: playlists[index]['title'],
                             text: playlists[index]['text'],
+                            archived: playlists[index]['archived'],
                           ),
                         );
                       },
@@ -80,7 +78,7 @@ class _NoteListState extends State<NoteList> {
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) => SaveNote(
-                          refreshHome: getAllPlaylists,
+                          refreshHome: getAllNotes,
                         ),
                       ));
                 },
