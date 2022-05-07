@@ -24,7 +24,7 @@ ThemeData light = ThemeData(
     ),
   ),
   appBarTheme: const AppBarTheme(
-      color: Color(0xFFFAFBFB),
+      color: Color(0xFFF7F8F9),
       elevation: 0,
       iconTheme: IconThemeData(color: Color(0xFF000000)),
       titleTextStyle: TextStyle(
@@ -60,20 +60,20 @@ ThemeData light = ThemeData(
         side: BorderSide(color: Colors.grey.shade800.withOpacity(0.3))),
   ),
   bottomSheetTheme: const BottomSheetThemeData(
-    backgroundColor: Color(0xFFF7F7FB),
+    backgroundColor: Color(0xFFF3F4F6),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
     ),
   ),
-  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    backgroundColor: Color(0xFFF7F7FB),
-    selectedItemColor: Colors.teal,
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    backgroundColor: const Color(0xFFF3F4F6),
+    selectedItemColor: Colors.teal.shade400,
   ),
-  bottomAppBarColor: const Color(0xFFF7F7FB),
+  bottomAppBarColor: const Color(0xFFF3F4F6),
   navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: const Color(0xFFF7F7FB),
-      indicatorColor: Colors.teal,
+      backgroundColor: const Color(0xFFF3F4F6),
+      indicatorColor: Colors.teal.shade400,
       iconTheme: MaterialStateProperty.all(const IconThemeData(
         color: Color(0xFF050505),
       )),
@@ -84,10 +84,10 @@ ThemeData light = ThemeData(
 ThemeData dark = ThemeData(
   useMaterial3: true,
   brightness: Brightness.dark,
-  primaryColor: const Color(0xFF1D1E21),
-  scaffoldBackgroundColor: const Color(0xFF1D1E21),
+  primaryColor: const Color(0xFF202224),
+  scaffoldBackgroundColor: const Color(0xFF202224),
   colorScheme: const ColorScheme.dark(
-    background: Color(0xFF1D1E21),
+    background: Color(0xFF202224),
     primary: Color(0xFF6AB29E),
     onPrimary: Color(0xFF00382C),
     secondary: Color(0xFF7EE2C6),
@@ -99,7 +99,7 @@ ThemeData dark = ThemeData(
     ),
   ),
   appBarTheme: const AppBarTheme(
-      color: Color(0xFF262A2C),
+      color: Color(0xFF26282A),
       elevation: 0,
       iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
       titleTextStyle: TextStyle(
@@ -111,7 +111,7 @@ ThemeData dark = ThemeData(
     ),
   ),
   dialogTheme: const DialogTheme(
-    backgroundColor: Color(0xFF1D1E21),
+    backgroundColor: Color(0xFF202224),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(28)),
     ),
@@ -125,7 +125,7 @@ ThemeData dark = ThemeData(
   ),
   chipTheme: ChipThemeData(
     elevation: 0,
-    backgroundColor: const Color(0xFF1D1E21),
+    backgroundColor: const Color(0xFF202224),
     shape: StadiumBorder(
         side: BorderSide(color: Colors.grey.shade800.withOpacity(0.3))),
   ),

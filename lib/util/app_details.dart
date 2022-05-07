@@ -1,16 +1,19 @@
 class AppDetails{
 
-  static String appVersion = "1.0.1";
+  static String appVersion = "1.1.0";
   static String appName = "Simple Note Taker Fschmatz";
   static String repositoryLink = "https://github.com/Fschmatz/simple_note_taker";
 
   static String changelogCurrent = '''  
-1.0.1
-- Technically Usable
+1.1.0
+- Print Notes
 - Detect Links on the Note
 ''';
 
   static String changelogsOld = '''
+1.0.1
+- Technically Usable
+
 0.4.0
 - Share Intent
 - Save Note from Share

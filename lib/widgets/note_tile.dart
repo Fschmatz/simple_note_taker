@@ -141,29 +141,32 @@ class _NoteTileState extends State<NoteTile> {
         ListTile(
           contentPadding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
           onTap: openBottomMenu,
-          title: Text(widget.note.title),
+          title: Text(
+            widget.note.title,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
           subtitle: widget.note.text.isNotEmpty
               ? Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: LinkWell(
-                    widget.note.text,
-                    linkStyle: TextStyle(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .secondary
-                          .withOpacity(0.8),
-                      fontSize: 14,
-                      decoration: TextDecoration.underline,
-                    ),
-                style: TextStyle(
-                    fontSize: 14,
-                    color: Theme.of(context)
-                        .textTheme
-                        .headline6!
-                        .color!
-                        .withOpacity(0.7))
-                  ),
-              )
+                  padding: const EdgeInsets.only(top: 10),
+                  child: LinkWell(widget.note.text,
+                      linkStyle: TextStyle(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .secondary
+                            .withOpacity(0.8),
+                        fontSize: 14,
+                        decoration: TextDecoration.underline,
+                      ),
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context)
+                              .textTheme
+                              .headline6!
+                              .color!
+                              .withOpacity(0.7))),
+                )
               : null,
         ),
       ],

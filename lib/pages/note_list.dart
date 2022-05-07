@@ -14,8 +14,8 @@ class NoteList extends StatefulWidget {
 }
 
 class _NoteListState extends State<NoteList> {
-  List<Map<String, dynamic>> playlists = [];
-  final dbPlaylist = NoteDao.instance;
+  List<Map<String, dynamic>> notesList = [];
+  final dbNotes = NoteDao.instance;
   bool loading = true;
 
   @override
@@ -30,10 +30,10 @@ class _NoteListState extends State<NoteList> {
         loading = true;
       });
     }
-    var resp = await dbPlaylist.queryAllRowsDescArchive(widget.archivedValue);
+    var resp = await dbNotes.queryAllRowsDescArchive(widget.archivedValue);
     setState(() {
       loading = false;
-      playlists = resp;
+      notesList = resp;
     });
   }
 
@@ -51,16 +51,16 @@ class _NoteListState extends State<NoteList> {
                           const Divider(height: 0,),
                       physics: const ScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: playlists.length,
+                      itemCount: notesList.length,
                       itemBuilder: (context, int index) {
                         return NoteTile(
                           key: UniqueKey(),
                           refreshHome: getAllNotes,
                           note: Note(
-                            idNote: playlists[index]['id_note'],
-                            title: playlists[index]['title'],
-                            text: playlists[index]['text'],
-                            archived: playlists[index]['archived'],
+                            idNote: notesList[index]['id_note'],
+                            title: notesList[index]['title'],
+                            text: notesList[index]['text'],
+                            archived: notesList[index]['archived'],
                           ),
                         );
                       },

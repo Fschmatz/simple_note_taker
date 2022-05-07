@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:simple_note_taker/widgets/dialog_print_notes.dart';
 import '../../util/app_details.dart';
 import '../../util/dialog_select_theme.dart';
 import 'app_info_page.dart';
@@ -70,6 +71,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 getThemeStringFormatted(),
               ),
             ),
+            ListTile(
+                leading: const Icon(Icons.print_outlined),
+                title: const Text("Print Notes"),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => DialogPrintNotes(),
+                      fullscreenDialog: true,
+                    ))),
             ListTile(
               title: Text("About",
                   style: TextStyle(
