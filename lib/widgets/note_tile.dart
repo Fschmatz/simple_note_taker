@@ -143,24 +143,27 @@ class _NoteTileState extends State<NoteTile> {
           onTap: openBottomMenu,
           title: Text(widget.note.title),
           subtitle: widget.note.text.isNotEmpty
-              ? LinkWell(
-                  widget.note.text,
-                  linkStyle: TextStyle(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .secondary
-                        .withOpacity(0.8),
+              ? Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: LinkWell(
+                    widget.note.text,
+                    linkStyle: TextStyle(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withOpacity(0.8),
+                      fontSize: 14,
+                      decoration: TextDecoration.underline,
+                    ),
+                style: TextStyle(
                     fontSize: 14,
-                    decoration: TextDecoration.underline,
+                    color: Theme.of(context)
+                        .textTheme
+                        .headline6!
+                        .color!
+                        .withOpacity(0.7))
                   ),
-              style: TextStyle(
-                  fontSize: 14,
-                  color: Theme.of(context)
-                      .textTheme
-                      .headline6!
-                      .color!
-                      .withOpacity(0.7))
-                )
+              )
               : null,
         ),
       ],

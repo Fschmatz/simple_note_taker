@@ -110,7 +110,6 @@ class _SaveNoteState extends State<SaveNote> {
                 maxLength: 300,
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 textCapitalization: TextCapitalization.sentences,
-                keyboardType: TextInputType.name,
                 controller: controllerNoteTitle,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.notes_outlined),
@@ -134,7 +133,6 @@ class _SaveNoteState extends State<SaveNote> {
                 maxLength: 500,
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 textCapitalization: TextCapitalization.sentences,
-                keyboardType: TextInputType.name,
                 controller: controllerNoteText,
                 decoration: const InputDecoration(
                   counterText: "",

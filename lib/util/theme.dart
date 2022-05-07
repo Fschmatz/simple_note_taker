@@ -84,10 +84,10 @@ ThemeData light = ThemeData(
 ThemeData dark = ThemeData(
   useMaterial3: true,
   brightness: Brightness.dark,
-  primaryColor: const Color(0xFF202123),
-  scaffoldBackgroundColor: const Color(0xFF202123),
+  primaryColor: const Color(0xFF1D1E21),
+  scaffoldBackgroundColor: const Color(0xFF1D1E21),
   colorScheme: const ColorScheme.dark(
-    background: Color(0xFF202123),
+    background: Color(0xFF1D1E21),
     primary: Color(0xFF6AB29E),
     onPrimary: Color(0xFF00382C),
     secondary: Color(0xFF7EE2C6),
@@ -111,7 +111,7 @@ ThemeData dark = ThemeData(
     ),
   ),
   dialogTheme: const DialogTheme(
-    backgroundColor: Color(0xFF202123),
+    backgroundColor: Color(0xFF1D1E21),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(28)),
     ),
@@ -125,7 +125,7 @@ ThemeData dark = ThemeData(
   ),
   chipTheme: ChipThemeData(
     elevation: 0,
-    backgroundColor: const Color(0xFF202123),
+    backgroundColor: const Color(0xFF1D1E21),
     shape: StadiumBorder(
         side: BorderSide(color: Colors.grey.shade800.withOpacity(0.3))),
   ),
