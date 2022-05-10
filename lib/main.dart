@@ -9,7 +9,7 @@ import 'class/init_data.dart';
 import 'class/show_data_argument.dart';
 
 const String homeRoute = "home";
-const String showDataRoute = "showData";
+const String shareRoute = "share";
 
 Future<InitData> init() async {
   String sharedText = "";
@@ -17,7 +17,7 @@ Future<InitData> init() async {
   String? sharedValue = await ReceiveSharingIntent.getInitialText();
   if (sharedValue != null) {
     sharedText = sharedValue;
-    routeName = showDataRoute;
+    routeName = shareRoute;
   }
   return InitData(sharedText, routeName);
 }
@@ -54,7 +54,7 @@ class _StartAppRoutesState extends State<StartAppRoutes> {
     _intentDataStreamSubscription =
         ReceiveSharingIntent.getTextStream().listen((String value) {
           _navKey.currentState!.pushNamed(
-            showDataRoute,
+            shareRoute,
             arguments: ShowDataArgument(value),
           );
         });
@@ -78,7 +78,7 @@ class _StartAppRoutesState extends State<StartAppRoutes> {
         switch (settings.name) {
           case homeRoute:
             return MaterialPageRoute(builder: (_) => const App());
-          case showDataRoute:
+          case shareRoute:
             {
               if (settings.arguments != null) {
                 final args = settings.arguments as ShowDataArgument;

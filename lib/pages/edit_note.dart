@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../class/note.dart';
-import '../db/note_dao.dart';
+import '../db/note_controller.dart';
 
 class EditNote extends StatefulWidget {
   @override
@@ -15,7 +15,6 @@ class EditNote extends StatefulWidget {
 }
 
 class _EditNoteState extends State<EditNote> {
-
   TextEditingController controllerNoteTitle = TextEditingController();
   TextEditingController controllerNoteText = TextEditingController();
 
@@ -26,16 +25,12 @@ class _EditNoteState extends State<EditNote> {
     super.initState();
   }
 
-
-  Future<void> _updatePlaylist() async {
-    final dbPlaylist = NoteDao.instance;
-
-    Map<String, dynamic> row = {
-      NoteDao.columnIdNote: widget.note.idNote,
-      NoteDao.columnTitle: controllerNoteTitle.text,
-      NoteDao.columnText: controllerNoteText.text,
-    };
-    final update = await dbPlaylist.update(row);
+  Future<void> _updateNote() async {
+    updateNote(Note(
+        idNote: widget.note.idNote,
+        title: controllerNoteTitle.text,
+        text: controllerNoteText.text,
+        archived: widget.note.archived));
   }
 
   String checkErrors() {
@@ -94,7 +89,7 @@ class _EditNoteState extends State<EditNote> {
                 tooltip: 'Save',
                 onPressed: () {
                   if (checkErrors().isEmpty) {
-                    _updatePlaylist().then((v) =>
+                    _updateNote().then((v) =>
                         {widget.refreshHome(), Navigator.of(context).pop()});
                   } else {
                     showAlertDialogErrors(context);
@@ -104,8 +99,6 @@ class _EditNoteState extends State<EditNote> {
             ],
           ),
           body: ListView(children: [
-
-
             ListTile(
               title: Text("Title",
                   style: TextStyle(
@@ -153,7 +146,6 @@ class _EditNoteState extends State<EditNote> {
                 ),
               ),
             ),
-
             const SizedBox(
               height: 50,
             ),

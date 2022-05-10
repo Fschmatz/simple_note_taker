@@ -61,7 +61,7 @@ class _DialogPrintNotesState extends State<DialogPrintNotes> {
         actions: [
           TextButton(
             child: const Text(
-              "Copy All",
+              "Copy",
             ),
             onPressed: () {
               Clipboard.setData(ClipboardData(text: formattedList));

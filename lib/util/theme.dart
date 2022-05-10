@@ -24,7 +24,7 @@ ThemeData light = ThemeData(
     ),
   ),
   appBarTheme: const AppBarTheme(
-      color: Color(0xFFF7F8F9),
+      color: Color(0xFFFFFFFF),
       elevation: 0,
       iconTheme: IconThemeData(color: Color(0xFF000000)),
       titleTextStyle: TextStyle(
@@ -60,19 +60,19 @@ ThemeData light = ThemeData(
         side: BorderSide(color: Colors.grey.shade800.withOpacity(0.3))),
   ),
   bottomSheetTheme: const BottomSheetThemeData(
-    backgroundColor: Color(0xFFF3F4F6),
+    backgroundColor: Color(0xFFF2F4F6),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
     ),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    backgroundColor: const Color(0xFFF3F4F6),
+    backgroundColor: const Color(0xFFF2F4F6),
     selectedItemColor: Colors.teal.shade400,
   ),
-  bottomAppBarColor: const Color(0xFFF3F4F6),
+  bottomAppBarColor: const Color(0xFFF2F4F6),
   navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: const Color(0xFFF3F4F6),
+      backgroundColor: const Color(0xFFF2F4F6),
       indicatorColor: Colors.teal.shade400,
       iconTheme: MaterialStateProperty.all(const IconThemeData(
         color: Color(0xFF050505),
@@ -93,13 +93,13 @@ ThemeData dark = ThemeData(
     secondary: Color(0xFF7EE2C6),
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    backgroundColor: Color(0xFF6AB29E),
+    backgroundColor: Color(0xFF5DDBBD),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(16)),
     ),
   ),
   appBarTheme: const AppBarTheme(
-      color: Color(0xFF26282A),
+      color: Color(0xFF202224),
       elevation: 0,
       iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
       titleTextStyle: TextStyle(
@@ -156,7 +156,7 @@ ThemeData dark = ThemeData(
   bottomAppBarColor: const Color(0xFF2A2D2F),
   navigationBarTheme: NavigationBarThemeData(
       backgroundColor: const Color(0xFF2A2D2F),
-      indicatorColor: const Color(0xFF5BB199),
+      indicatorColor: const Color(0xFF63B49E),
       iconTheme: MaterialStateProperty.all(const IconThemeData(
         color: Color(0xFFEAEAEA),
       )),

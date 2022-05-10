@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../db/note_dao.dart';
+import 'package:simple_note_taker/db/note_controller.dart';
+import '../class/note.dart';
 
 class SaveNote extends StatefulWidget {
   @override
@@ -17,22 +17,19 @@ class _SaveNoteState extends State<SaveNote> {
   TextEditingController controllerNoteText = TextEditingController();
 
   Future<void> _saveNote() async {
-    final dbPlaylist = NoteDao.instance;
-
-    Map<String, dynamic> row = {
-      NoteDao.columnTitle: controllerNoteTitle.text,
-      NoteDao.columnText: controllerNoteText.text,
-      NoteDao.columnArchived: 0,
-    };
-    final id = await dbPlaylist.insert(row);
+    saveNote(Note(
+        idNote: 0,
+        title: controllerNoteTitle.text,
+        text: controllerNoteText.text,
+        archived: 0));
   }
 
   String checkErrors() {
-    String erros = "";
+    String errors = "";
     if (controllerNoteTitle.text.isEmpty) {
-      erros += "Insert title\n";
+      errors += "Insert title\n";
     }
-    return erros;
+    return errors;
   }
 
   showAlertDialogErrors(BuildContext context) {

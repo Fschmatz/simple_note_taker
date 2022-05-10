@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:linkwell/linkwell.dart';
 import 'package:share/share.dart';
+import 'package:simple_note_taker/db/note_controller.dart';
 import '../class/note.dart';
-import '../db/note_dao.dart';
 import '../pages/edit_note.dart';
 
 class NoteTile extends StatefulWidget {
@@ -11,25 +11,21 @@ class NoteTile extends StatefulWidget {
   _NoteTileState createState() => _NoteTileState();
 
   Note note;
+  int index;
   Function() refreshHome;
 
-  NoteTile({Key? key, required this.note, required this.refreshHome})
+  NoteTile({Key? key, required this.note, required this.index,required this.refreshHome})
       : super(key: key);
 }
 
 class _NoteTileState extends State<NoteTile> {
-  void _delete() async {
-    final notes = NoteDao.instance;
-    final deleted = await notes.delete(widget.note.idNote);
+
+  Future<void> _deleteNote() async {
+    deleteNote(widget.note.idNote);
   }
 
   Future<void> _archiveNote() async {
-    final notes = NoteDao.instance;
-    Map<String, dynamic> row = {
-      NoteDao.columnIdNote: widget.note.idNote,
-      NoteDao.columnArchived: widget.note.archived == 0 ? 1 : 0,
-    };
-    final update = await notes.update(row);
+    archiveNote(widget.note.idNote, widget.note.archived == 0 ? 1 : 0);
   }
 
   void openBottomMenu() {
@@ -123,7 +119,7 @@ class _NoteTileState extends State<NoteTile> {
                 "Yes",
               ),
               onPressed: () {
-                _delete();
+                _deleteNote();
                 widget.refreshHome();
                 Navigator.of(context).pop();
               },
@@ -139,7 +135,7 @@ class _NoteTileState extends State<NoteTile> {
     return Column(
       children: [
         ListTile(
-          contentPadding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+          contentPadding: EdgeInsets.fromLTRB(16, widget.index == 0 ? 5 : 12, 16, 12),
           onTap: openBottomMenu,
           title: Text(
             widget.note.title,

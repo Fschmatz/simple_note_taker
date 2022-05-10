@@ -56,6 +56,7 @@ class _NoteListState extends State<NoteList> {
                         return NoteTile(
                           key: UniqueKey(),
                           refreshHome: getAllNotes,
+                          index: index,
                           note: Note(
                             idNote: notesList[index]['id_note'],
                             title: notesList[index]['title'],
