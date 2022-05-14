@@ -68,7 +68,6 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.text_snippet_outlined),
             selectedIcon: Icon(
               Icons.text_snippet,
-              color: Colors.black87,
             ),
             label: 'Notes',
           ),
@@ -76,7 +75,6 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.archive_outlined),
             selectedIcon: Icon(
               Icons.archive,
-              color: Colors.black87,
             ),
             label: 'Archive',
           ),

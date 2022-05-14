@@ -14,12 +14,15 @@ class NoteTile extends StatefulWidget {
   int index;
   Function() refreshHome;
 
-  NoteTile({Key? key, required this.note, required this.index,required this.refreshHome})
+  NoteTile(
+      {Key? key,
+      required this.note,
+      required this.index,
+      required this.refreshHome})
       : super(key: key);
 }
 
 class _NoteTileState extends State<NoteTile> {
-
   Future<void> _deleteNote() async {
     deleteNote(widget.note.idNote);
   }
@@ -37,6 +40,25 @@ class _NoteTileState extends State<NoteTile> {
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: Wrap(
                 children: <Widget>[
+                  ListTile(
+                    leading: const Icon(Icons.edit_outlined),
+                    title: const Text(
+                      "Edit",
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => EditNote(
+                              note: widget.note,
+                              refreshHome: widget.refreshHome,
+                            ),
+                          ));
+                    },
+                  ),
+                  const Divider(),
+
                   ListTile(
                     leading: widget.note.archived == 0
                         ? const Icon(Icons.archive_outlined)
@@ -63,24 +85,6 @@ class _NoteTileState extends State<NoteTile> {
                     onTap: () {
                       Navigator.of(context).pop();
                       Share.share(widget.note.title + "\n" + widget.note.text);
-                    },
-                  ),
-                  const Divider(),
-                  ListTile(
-                    leading: const Icon(Icons.edit_outlined),
-                    title: const Text(
-                      "Edit",
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => EditNote(
-                              note: widget.note,
-                              refreshHome: widget.refreshHome,
-                            ),
-                          ));
                     },
                   ),
                   const Divider(),
@@ -135,7 +139,8 @@ class _NoteTileState extends State<NoteTile> {
     return Column(
       children: [
         ListTile(
-          contentPadding: EdgeInsets.fromLTRB(16, widget.index == 0 ? 5 : 12, 16, 12),
+          contentPadding:
+              EdgeInsets.fromLTRB(16, widget.index == 0 ? 5 : 12, 16, 12),
           onTap: openBottomMenu,
           title: Text(
             widget.note.title,
@@ -150,8 +155,7 @@ class _NoteTileState extends State<NoteTile> {
                       linkStyle: TextStyle(
                         color: Theme.of(context)
                             .colorScheme
-                            .secondary
-                            .withOpacity(0.8),
+                            .secondary,
                         fontSize: 14,
                         decoration: TextDecoration.underline,
                       ),

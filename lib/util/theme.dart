@@ -67,13 +67,13 @@ ThemeData light = ThemeData(
     ),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    backgroundColor: const Color(0xFFF2F4F6),
+    backgroundColor: const Color(0xFFD5E6E2),
     selectedItemColor: Colors.teal.shade400,
   ),
-  bottomAppBarColor: const Color(0xFFF2F4F6),
+  bottomAppBarColor: const Color(0xFFD5E6E2),
   navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: const Color(0xFFF2F4F6),
-      indicatorColor: Colors.teal.shade400,
+      backgroundColor: const Color(0xFFD5E6E2),
+      indicatorColor: const Color(0xFFA4CFC7),
       iconTheme: MaterialStateProperty.all(const IconThemeData(
         color: Color(0xFF050505),
       )),
@@ -88,12 +88,12 @@ ThemeData dark = ThemeData(
   scaffoldBackgroundColor: const Color(0xFF202224),
   colorScheme: const ColorScheme.dark(
     background: Color(0xFF202224),
-    primary: Color(0xFF6AB29E),
-    onPrimary: Color(0xFF00382C),
-    secondary: Color(0xFF7EE2C6),
+    primary: Color(0xFF65B29D),
+    onPrimary: Color(0xFF003731),
+    secondary: Color(0xFF7AD9BE),
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    backgroundColor: Color(0xFF5DDBBD),
+    backgroundColor: Color(0xFF53DBB7),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(16)),
     ),
@@ -156,10 +156,10 @@ ThemeData dark = ThemeData(
   bottomAppBarColor: const Color(0xFF2A2D2F),
   navigationBarTheme: NavigationBarThemeData(
       backgroundColor: const Color(0xFF2A2D2F),
-      indicatorColor: const Color(0xFF63B49E),
+      indicatorColor: const Color(0xFF395651),
       iconTheme: MaterialStateProperty.all(const IconThemeData(
-        color: Color(0xFFEAEAEA),
+        color: Color(0xFFE0E3E1),
       )),
       labelTextStyle: MaterialStateProperty.all(const TextStyle(
-          color: Color(0xFFEAEAEA), fontWeight: FontWeight.w500))),
+          color: Color(0xFFE0E3E1), fontWeight: FontWeight.w500))),
 );
