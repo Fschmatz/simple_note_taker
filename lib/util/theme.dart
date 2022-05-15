@@ -84,22 +84,22 @@ ThemeData light = ThemeData(
 ThemeData dark = ThemeData(
   useMaterial3: true,
   brightness: Brightness.dark,
-  primaryColor: const Color(0xFF202224),
-  scaffoldBackgroundColor: const Color(0xFF202224),
+  primaryColor: const Color(0xFF202122),
+  scaffoldBackgroundColor: const Color(0xFF202122),
   colorScheme: const ColorScheme.dark(
-    background: Color(0xFF202224),
+    background: Color(0xFF202122),
     primary: Color(0xFF65B29D),
     onPrimary: Color(0xFF003731),
     secondary: Color(0xFF7AD9BE),
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    backgroundColor: Color(0xFF53DBB7),
+    backgroundColor: Color(0xFF50CCAB),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(16)),
     ),
   ),
   appBarTheme: const AppBarTheme(
-      color: Color(0xFF202224),
+      color: Color(0xFF202122),
       elevation: 0,
       iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
       titleTextStyle: TextStyle(
@@ -111,7 +111,7 @@ ThemeData dark = ThemeData(
     ),
   ),
   dialogTheme: const DialogTheme(
-    backgroundColor: Color(0xFF202224),
+    backgroundColor: Color(0xFF202122),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(28)),
     ),
@@ -125,7 +125,7 @@ ThemeData dark = ThemeData(
   ),
   chipTheme: ChipThemeData(
     elevation: 0,
-    backgroundColor: const Color(0xFF202224),
+    backgroundColor: const Color(0xFF202122),
     shape: StadiumBorder(
         side: BorderSide(color: Colors.grey.shade800.withOpacity(0.3))),
   ),
@@ -156,7 +156,7 @@ ThemeData dark = ThemeData(
   bottomAppBarColor: const Color(0xFF2A2D2F),
   navigationBarTheme: NavigationBarThemeData(
       backgroundColor: const Color(0xFF2A2D2F),
-      indicatorColor: const Color(0xFF395651),
+      indicatorColor: const Color(0xFF45776F),
       iconTheme: MaterialStateProperty.all(const IconThemeData(
         color: Color(0xFFE0E3E1),
       )),

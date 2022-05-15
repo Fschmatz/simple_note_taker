@@ -140,13 +140,10 @@ class _NoteTileState extends State<NoteTile> {
       children: [
         ListTile(
           contentPadding:
-              EdgeInsets.fromLTRB(16, widget.index == 0 ? 5 : 12, 16, 12),
+              EdgeInsets.fromLTRB(16, widget.index == 0 ? 5 : 10, 16, 10),
           onTap: openBottomMenu,
           title: Text(
             widget.note.title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-            ),
           ),
           subtitle: widget.note.text.isNotEmpty
               ? Padding(

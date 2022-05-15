@@ -102,6 +102,7 @@ class _SaveNoteState extends State<SaveNote> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
+                autofocus: true,
                 minLines: 1,
                 maxLines: 5,
                 maxLength: 300,
