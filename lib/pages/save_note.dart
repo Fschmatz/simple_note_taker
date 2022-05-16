@@ -104,7 +104,7 @@ class _SaveNoteState extends State<SaveNote> {
               child: TextField(
                 autofocus: true,
                 minLines: 1,
-                maxLines: 5,
+                maxLines: 2,
                 maxLength: 300,
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 textCapitalization: TextCapitalization.sentences,
@@ -127,8 +127,8 @@ class _SaveNoteState extends State<SaveNote> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
                 minLines: 1,
-                maxLines: 6,
-                maxLength: 500,
+                maxLines: 15,
+                maxLength: 1500,
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 textCapitalization: TextCapitalization.sentences,
                 controller: controllerNoteText,
