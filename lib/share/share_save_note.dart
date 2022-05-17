@@ -1,3 +1,5 @@
+import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
+import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -130,6 +132,7 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
                     minLines: 1,
                     maxLines: 2,
                     maxLength: 300,
+                    style: const TextStyle(fontSize: 18, letterSpacing: 0.5),
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     textCapitalization: TextCapitalization.sentences,
                     controller: controllerNoteTitle,
@@ -158,13 +161,28 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: TextField(
+                  child:  DetectableTextField(
                     minLines: 1,
                     maxLines: null,
                     maxLength: 2000,
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     textCapitalization: TextCapitalization.sentences,
                     controller: controllerNoteText,
+                    detectionRegExp: RegExp(
+                      "(?!\\n)(?:^|\\s)([#@]([$detectionContentLetters]+))|$urlRegexContent",
+                      multiLine: true,
+                    ),
+                    basicStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      letterSpacing: 0.5,
+                    ),
+                    decoratedStyle : const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.5,
+                      color: Colors.blue,
+                    ),
                     decoration: const InputDecoration(
                         counterText: "",
                         fillColor: Colors.transparent,

@@ -1,3 +1,5 @@
+import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
+import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:simple_note_taker/db/note_controller.dart';
@@ -98,12 +100,13 @@ class _SaveNoteState extends State<SaveNote> {
                 minLines: 1,
                 maxLines: 2,
                 maxLength: 300,
+                style: TextStyle(fontSize: 18),
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 textCapitalization: TextCapitalization.sentences,
                 controller: controllerNoteTitle,
                 decoration: const InputDecoration(
                     hintText: "Title",
-                    hintStyle: TextStyle(fontSize: 18),
+                    hintStyle: TextStyle(fontSize: 18, letterSpacing: 0.5),
                     counterText: "",
                     contentPadding:
                     EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
@@ -126,13 +129,28 @@ class _SaveNoteState extends State<SaveNote> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: TextField(
+              child: DetectableTextField(
                 minLines: 1,
                 maxLines: null,
                 maxLength: 2000,
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 textCapitalization: TextCapitalization.sentences,
                 controller: controllerNoteText,
+                detectionRegExp: RegExp(
+                  "(?!\\n)(?:^|\\s)([#@]([$detectionContentLetters]+))|$urlRegexContent",
+                  multiLine: true,
+                ),
+                basicStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.5,
+                ),
+                decoratedStyle : const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.5,
+                  color: Colors.blue,
+                ),
                 decoration: const InputDecoration(
                     counterText: "",
                     fillColor: Colors.transparent,

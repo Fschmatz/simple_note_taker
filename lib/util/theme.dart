@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 ThemeData light = ThemeData(
   useMaterial3: true,
   brightness: Brightness.light,
-  primaryColor: const Color(0xFFF4F6F8),
-  scaffoldBackgroundColor: const Color(0xFFF4F6F8),
+  primaryColor: const Color(0xFFFFFFFF),
+  scaffoldBackgroundColor: const Color(0xFFFFFFFF),
   colorScheme: ColorScheme.light(
-    background: const Color(0xFFF4F6F8),
+    background: const Color(0xFFFFFFFF),
     primary: Colors.teal.shade400,
     onPrimary: const Color(0xFFFFFFFF),
     secondary: Colors.teal,
@@ -24,7 +24,7 @@ ThemeData light = ThemeData(
     ),
   ),
   appBarTheme: const AppBarTheme(
-      color: Color(0xFFF4F6F8),
+      color: Color(0xFFFFFFFF),
       elevation: 0,
       iconTheme: IconThemeData(color: Color(0xFF000000)),
       titleTextStyle: TextStyle(
@@ -64,13 +64,13 @@ ThemeData light = ThemeData(
     ),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    backgroundColor: const Color(0xFFF4F6F8),
+    backgroundColor: const Color(0xFFD5E6E2),
     selectedItemColor: Colors.teal.shade400,
   ),
-  bottomAppBarColor: const Color(0xFFF4F6F8),
+  bottomAppBarColor: const Color(0xFFD5E6E2),
   navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: const Color(0xFFF4F6F8),//0xFFD5E6E2
-      indicatorColor: const Color(0xFFF4F6F8),//0xFFA4CFC7
+      backgroundColor: const Color(0xFFD5E6E2),//0xFFD5E6E2
+      indicatorColor: const Color(0xFFA4CFC7),//0xFFA4CFC7
       iconTheme: MaterialStateProperty.all(const IconThemeData(
         color: Color(0xFF050505),
       )),
@@ -81,10 +81,10 @@ ThemeData light = ThemeData(
 ThemeData dark = ThemeData(
   useMaterial3: true,
   brightness: Brightness.dark,
-  primaryColor: const Color(0xFF1A1D1F),
-  scaffoldBackgroundColor: const Color(0xFF1A1D1F),
+  primaryColor: const Color(0xFF202122),
+  scaffoldBackgroundColor: const Color(0xFF202122),
   colorScheme: const ColorScheme.dark(
-    background: Color(0xFF1A1D1F),
+    background: Color(0xFF202122),
     primary: Color(0xFF65B29D),
     onPrimary: Color(0xFF003731),
     secondary: Color(0xFF7AD9BE),
@@ -96,7 +96,7 @@ ThemeData dark = ThemeData(
     ),
   ),
   appBarTheme: const AppBarTheme(
-      color: Color(0xFF1A1D1F),
+      color: Color(0xFF202122),
       elevation: 0,
       iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
       titleTextStyle: TextStyle(
@@ -108,13 +108,13 @@ ThemeData dark = ThemeData(
     ),
   ),
   dialogTheme: const DialogTheme(
-    backgroundColor: Color(0xFF1A1D1F),
+    backgroundColor: Color(0xFF202122),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(28)),
     ),
   ),
   bottomSheetTheme: const BottomSheetThemeData(
-    backgroundColor: Color(0xFF1A1D1F),
+    backgroundColor: Color(0xFF202122),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
@@ -142,11 +142,11 @@ ThemeData dark = ThemeData(
           ),
           borderRadius: BorderRadius.circular(10.0))),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    backgroundColor: Color(0xFF1A1D1F),
+    backgroundColor: Color(0xFF2A2D2F),
   ),
-  bottomAppBarColor: const Color(0xFF1A1D1F),
+  bottomAppBarColor: const Color(0xFF2A2D2F),
   navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: const Color(0xFF1A1D1F),//0xFF1A1D1F
+      backgroundColor: const Color(0xFF2A2D2F),//0xFF202122
       indicatorColor: const Color(0xFF3C7E74),
       iconTheme: MaterialStateProperty.all(const IconThemeData(
         color: Color(0xFFE0E3E1),

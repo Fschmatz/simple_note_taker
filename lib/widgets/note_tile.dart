@@ -31,7 +31,7 @@ class _NoteTileState extends State<NoteTile> {
     archiveNote(widget.note.idNote, widget.note.archived == 0 ? 1 : 0);
   }
 
-  void openEditPage(){
+  void openEditPage() {
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -139,40 +139,28 @@ class _NoteTileState extends State<NoteTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      child: ListTile(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        minVerticalPadding: 12,
-       onTap: openEditPage,
-        onLongPress: openBottomMenu,
-        title: Text(
-          widget.note.title,
-        ),
-        subtitle: widget.note.text.isNotEmpty
-            ? Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: LinkWell(widget.note.text,
-                    maxLines: 2,
-                    linkStyle: TextStyle(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .secondary,
+    return ListTile(
+      minVerticalPadding: 12,
+      onTap: openEditPage,
+      onLongPress: openBottomMenu,
+      title: Text(widget.note.title,
+          style: const TextStyle(
+            letterSpacing: 0.5,
+          )),
+      subtitle: widget.note.text.isNotEmpty
+          ? Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(widget.note.text,
+                  maxLines: 3,
+                  style: TextStyle(
                       fontSize: 14,
-                      decoration: TextDecoration.underline,
-                    ),
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context)
-                            .textTheme
-                            .headline6!
-                            .color!
-                            .withOpacity(0.7))),
-              )
-            : null,
-      ),
+                      letterSpacing: 0.5,
+                      color: Theme.of(context)
+                          .textTheme
+                          .headline6!
+                          .color!
+                          .withOpacity(0.7))))
+          : null,
     );
   }
 }
