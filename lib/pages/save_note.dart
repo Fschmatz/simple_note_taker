@@ -92,17 +92,9 @@ class _SaveNoteState extends State<SaveNote> {
             ],
           ),
           body: ListView(children: [
-            ListTile(
-              title: Text("Title",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Theme.of(context).colorScheme.primary)),
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
-                autofocus: true,
                 minLines: 1,
                 maxLines: 2,
                 maxLength: 300,
@@ -110,34 +102,59 @@ class _SaveNoteState extends State<SaveNote> {
                 textCapitalization: TextCapitalization.sentences,
                 controller: controllerNoteTitle,
                 decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.notes_outlined),
-                  helperText: "* Required",
-                  counterText: "",
-                ),
+                    hintText: "Title",
+                    hintStyle: TextStyle(fontSize: 18),
+                    counterText: "",
+                    contentPadding:
+                    EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    )),
               ),
-            ),
-            ListTile(
-              title: Text("Text",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Theme.of(context).colorScheme.primary)),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
                 minLines: 1,
-                maxLines: 15,
-                maxLength: 1500,
+                maxLines: null,
+                maxLength: 2000,
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 textCapitalization: TextCapitalization.sentences,
                 controller: controllerNoteText,
                 decoration: const InputDecoration(
-                  counterText: "",
-                  prefixIcon: Icon(
-                    Icons.notes_outlined,
-                  ),
-                ),
+                    counterText: "",
+                    fillColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hintText: "Note",
+                    contentPadding:
+                    EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    )),
               ),
             ),
             const SizedBox(

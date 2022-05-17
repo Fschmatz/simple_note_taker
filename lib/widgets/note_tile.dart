@@ -31,6 +31,17 @@ class _NoteTileState extends State<NoteTile> {
     archiveNote(widget.note.idNote, widget.note.archived == 0 ? 1 : 0);
   }
 
+  void openEditPage(){
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => EditNote(
+            note: widget.note,
+            refreshHome: widget.refreshHome,
+          ),
+        ));
+  }
+
   void openBottomMenu() {
     showModalBottomSheet(
         context: context,
@@ -40,25 +51,17 @@ class _NoteTileState extends State<NoteTile> {
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: Wrap(
                 children: <Widget>[
-                  ListTile(
+                  /*ListTile(
                     leading: const Icon(Icons.edit_outlined),
                     title: const Text(
                       "Edit",
                     ),
                     onTap: () {
                       Navigator.of(context).pop();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => EditNote(
-                              note: widget.note,
-                              refreshHome: widget.refreshHome,
-                            ),
-                          ));
+                      openEditPage();
                     },
                   ),
-                  const Divider(),
-
+                  const Divider(),*/
                   ListTile(
                     leading: widget.note.archived == 0
                         ? const Icon(Icons.archive_outlined)
@@ -136,36 +139,40 @@ class _NoteTileState extends State<NoteTile> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding:
-          EdgeInsets.fromLTRB(16, widget.index == 0 ? 5 : 12, 16, 12),
-      onTap: openBottomMenu,
-      title: Text(
-        widget.note.title,
-        style: const TextStyle(
-          fontWeight: FontWeight.w500,
+    return Card(
+      margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      child: ListTile(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
-      ),
-      subtitle: widget.note.text.isNotEmpty
-          ? Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: LinkWell(widget.note.text,
-                  linkStyle: TextStyle(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .secondary,
-                    fontSize: 14,
-                    decoration: TextDecoration.underline,
-                  ),
-                  style: TextStyle(
-                      fontSize: 14,
+        minVerticalPadding: 12,
+       onTap: openEditPage,
+        onLongPress: openBottomMenu,
+        title: Text(
+          widget.note.title,
+        ),
+        subtitle: widget.note.text.isNotEmpty
+            ? Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: LinkWell(widget.note.text,
+                    maxLines: 2,
+                    linkStyle: TextStyle(
                       color: Theme.of(context)
-                          .textTheme
-                          .headline6!
-                          .color!
-                          .withOpacity(0.7))),
-            )
-          : null,
+                          .colorScheme
+                          .secondary,
+                      fontSize: 14,
+                      decoration: TextDecoration.underline,
+                    ),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .color!
+                            .withOpacity(0.7))),
+              )
+            : null,
+      ),
     );
   }
 }

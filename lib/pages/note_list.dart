@@ -46,9 +46,7 @@ class _NoteListState extends State<NoteList> {
               ? const Center(child: SizedBox.shrink())
               : ListView(
                   children: [
-                    ListView.separated(
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const Divider(height: 0,),
+                    ListView.builder(
                       physics: const ScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: notesList.length,
