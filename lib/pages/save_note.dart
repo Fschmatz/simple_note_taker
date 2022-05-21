@@ -60,125 +60,113 @@ class _SaveNoteState extends State<SaveNote> {
     );
   }
 
-  void _loseFocus() {
-    FocusScopeNode currentFocus = FocusScope.of(context);
-    if (!currentFocus.hasPrimaryFocus) {
-      currentFocus.unfocus();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        _loseFocus();
-      },
-      child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Save Note'),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.save_outlined),
-                tooltip: 'Save',
-                onPressed: () {
-                  if (checkErrors().isEmpty) {
-                    _saveNote().then((v) => {
-                          widget.refreshHome!(),
-                          Navigator.of(context).pop(),
-                        });
-                  } else {
-                    showAlertDialogErrors(context);
-                  }
-                },
-              ),
-            ],
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Save Note'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.save_outlined),
+              tooltip: 'Save',
+              onPressed: () {
+                if (checkErrors().isEmpty) {
+                  _saveNote().then((v) => {
+                        widget.refreshHome!(),
+                        Navigator.of(context).pop(),
+                      });
+                } else {
+                  showAlertDialogErrors(context);
+                }
+              },
+            ),
+          ],
+        ),
+        body: ListView(children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: TextField(
+              minLines: 1,
+              maxLines: 2,
+              maxLength: 300,
+              style: const TextStyle(fontSize: 18),
+              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+              textCapitalization: TextCapitalization.sentences,
+              controller: controllerNoteTitle,
+              decoration: const InputDecoration(
+                  hintText: "Title",
+                  hintStyle: TextStyle(fontSize: 18, letterSpacing: 0.5),
+                  counterText: "",
+                  contentPadding:
+                  EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    ),
+                  )),
+            ),
           ),
-          body: ListView(children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: TextField(
-                minLines: 1,
-                maxLines: 2,
-                maxLength: 300,
-                style: TextStyle(fontSize: 18),
-                maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                textCapitalization: TextCapitalization.sentences,
-                controller: controllerNoteTitle,
-                decoration: const InputDecoration(
-                    hintText: "Title",
-                    hintStyle: TextStyle(fontSize: 18, letterSpacing: 0.5),
-                    counterText: "",
-                    contentPadding:
-                    EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                      ),
-                    )),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: DetectableTextField(
+              autofocus: true,
+              minLines: 1,
+              maxLines: null,
+              maxLength: 2000,
+              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+              textCapitalization: TextCapitalization.sentences,
+              controller: controllerNoteText,
+              detectionRegExp: RegExp(
+                "(?!\\n)(?:^|\\s)([#@]([$detectionContentLetters]+))|$urlRegexContent",
+                multiLine: true,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: DetectableTextField(
-                minLines: 1,
-                maxLines: null,
-                maxLength: 2000,
-                maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                textCapitalization: TextCapitalization.sentences,
-                controller: controllerNoteText,
-                detectionRegExp: RegExp(
-                  "(?!\\n)(?:^|\\s)([#@]([$detectionContentLetters]+))|$urlRegexContent",
-                  multiLine: true,
-                ),
-                basicStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.5,
-                ),
-                decoratedStyle : const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.5,
-                  color: Colors.blue,
-                ),
-                decoration: const InputDecoration(
-                    counterText: "",
-                    fillColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hintText: "Note",
-                    contentPadding:
-                    EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                      ),
-                    )),
+              basicStyle: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
               ),
+              decoratedStyle : const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Colors.blue,
+              ),
+              decoration: const InputDecoration(
+                  counterText: "",
+                  fillColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hintText: "Note",
+                  contentPadding:
+                  EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    ),
+                  )),
             ),
-            const SizedBox(
-              height: 50,
-            ),
-          ])),
-    );
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+        ]));
   }
 }

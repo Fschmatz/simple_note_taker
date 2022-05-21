@@ -23,6 +23,7 @@ class NoteTile extends StatefulWidget {
 }
 
 class _NoteTileState extends State<NoteTile> {
+
   Future<void> _deleteNote() async {
     deleteNote(widget.note.idNote);
   }
@@ -143,10 +144,9 @@ class _NoteTileState extends State<NoteTile> {
       minVerticalPadding: 12,
       onTap: openEditPage,
       onLongPress: openBottomMenu,
-      title: Text(widget.note.title,
-          style: const TextStyle(
-            letterSpacing: 0.5,
-          )),
+      title: Text(
+        widget.note.title,
+      ),
       subtitle: widget.note.text.isNotEmpty
           ? Padding(
               padding: const EdgeInsets.only(top: 10),
@@ -154,7 +154,6 @@ class _NoteTileState extends State<NoteTile> {
                   maxLines: 3,
                   style: TextStyle(
                       fontSize: 14,
-                      letterSpacing: 0.5,
                       color: Theme.of(context)
                           .textTheme
                           .headline6!
