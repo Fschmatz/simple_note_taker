@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 ThemeData light = ThemeData(
-  //useMaterial3: true,
+  useMaterial3: true,
+  textTheme: const TextTheme(
+    titleMedium: TextStyle(fontWeight: FontWeight.w400),
+  ),
   brightness: Brightness.light,
   primaryColor: const Color(0xFFFFFFFF),
   scaffoldBackgroundColor: const Color(0xFFFFFFFF),
@@ -24,6 +27,7 @@ ThemeData light = ThemeData(
     ),
   ),
   appBarTheme: const AppBarTheme(
+      surfaceTintColor: Color(0xFFFFFFFF),
       color: Color(0xFFFFFFFF),
       elevation: 0,
       iconTheme: IconThemeData(color: Color(0xFF000000)),
@@ -79,7 +83,10 @@ ThemeData light = ThemeData(
 );
 
 ThemeData dark = ThemeData(
-  //useMaterial3: true,
+  useMaterial3: true,
+  textTheme: const TextTheme(
+    titleMedium: TextStyle(fontWeight: FontWeight.w400),
+  ),
   brightness: Brightness.dark,
   primaryColor: const Color(0xFF202122),
   scaffoldBackgroundColor: const Color(0xFF202122),
@@ -96,6 +103,7 @@ ThemeData dark = ThemeData(
     ),
   ),
   appBarTheme: const AppBarTheme(
+      surfaceTintColor: Color(0xFF202122),
       color: Color(0xFF202122),
       elevation: 0,
       iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),

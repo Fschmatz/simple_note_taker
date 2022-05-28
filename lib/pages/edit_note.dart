@@ -21,7 +21,7 @@ class EditNote extends StatefulWidget {
 class _EditNoteState extends State<EditNote> {
   TextEditingController controllerNoteTitle = TextEditingController();
   TextEditingController controllerNoteText = TextEditingController();
-  final FocusNode _textFocus = FocusNode();
+  bool readOnlyState = true;
 
   @override
   void initState() {
@@ -111,6 +111,20 @@ class _EditNoteState extends State<EditNote> {
         appBar: AppBar(
           actions: [
             IconButton(
+              icon: readOnlyState
+                  ? const Icon(Icons.edit_outlined)
+                  : const Icon(Icons.edit_off_outlined),
+              tooltip: 'Save',
+              onPressed: () {
+                setState(() {
+                  readOnlyState = !readOnlyState;
+                });
+              },
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            IconButton(
               icon: const Icon(Icons.save_outlined),
               tooltip: 'Save',
               onPressed: () {
@@ -159,58 +173,54 @@ class _EditNoteState extends State<EditNote> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: DetectableTextField(
-              focusNode: _textFocus,
-              minLines: 1,
-              maxLines: null,
-              maxLength: 2000,
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              textCapitalization: TextCapitalization.sentences,
-              controller: controllerNoteText,
-              detectionRegExp: RegExp(
-                "(?!\\n)(?:^|\\s)([#@]([$detectionContentLetters]+))|$urlRegexContent",
-                multiLine: true,
-              ),
-              onDetectionTyped: (text) {
-                print('jaca');
-                _textFocus.nextFocus();
-                _textFocus.consumeKeyboardToken();
-                _launchUrl(text);
-              },
-              basicStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              ),
-              decoratedStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Colors.blue,
-              ),
-              decoration: const InputDecoration(
-                  counterText: "",
-                  fillColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hintText: "Note",
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: DetectableTextField(
+                readOnly: readOnlyState,
+                minLines: 1,
+                maxLines: null,
+                maxLength: 2000,
+                maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                textCapitalization: TextCapitalization.sentences,
+                controller: controllerNoteText,
+                detectionRegExp: RegExp(
+                  "(?!\\n)(?:^|\\s)([#@]([$detectionContentLetters]+))|$urlRegexContent",
+                  multiLine: true,
+                ),
+                onDetectionTyped: (text) {
+                  readOnlyState ? _launchUrl(text) : null;
+                },
+                basicStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+                decoratedStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.blue,
+                ),
+                decoration: const InputDecoration(
+                    counterText: "",
+                    fillColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hintText: "Note",
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
                     ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
                     ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                    ),
-                  )),
-            ),
-          ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    )),
+              )),
           const SizedBox(
             height: 50,
           ),

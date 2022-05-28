@@ -141,7 +141,6 @@ class _NoteTileState extends State<NoteTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      minVerticalPadding: 12,
       onTap: openEditPage,
       onLongPress: openBottomMenu,
       title: Text(
