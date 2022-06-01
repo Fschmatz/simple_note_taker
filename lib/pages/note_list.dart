@@ -82,9 +82,8 @@ class _NoteListState extends State<NoteList> {
                         ),
                       ));
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.add_outlined,
-                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
               )
             : null);

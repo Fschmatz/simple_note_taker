@@ -79,130 +79,58 @@ class _EditNoteState extends State<EditNote> {
     );
   }
 
-  showAlertDialogOpenLink(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            "Confirm",
-          ),
-          content: const Text(
-            "OI ?",
-          ),
-          actions: [
-            TextButton(
-              child: const Text(
-                "Yes",
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              icon: readOnlyState
-                  ? const Icon(Icons.edit_outlined)
-                  : const Icon(Icons.edit_off_outlined),
-              tooltip: 'Save',
-              onPressed: () {
-                setState(() {
-                  readOnlyState = !readOnlyState;
-                });
-              },
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            IconButton(
-              icon: const Icon(Icons.save_outlined),
-              tooltip: 'Save',
-              onPressed: () {
-                if (checkErrors().isEmpty) {
-                  _updateNote().then((v) =>
-                      {widget.refreshHome(), Navigator.of(context).pop()});
-                } else {
-                  showAlertDialogErrors(context);
-                }
-              },
-            ),
-          ],
-        ),
-        body: ListView(children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextField(
-              minLines: 1,
-              maxLines: 2,
-              maxLength: 300,
-              style: const TextStyle(fontSize: 18),
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              textCapitalization: TextCapitalization.sentences,
-              controller: controllerNoteTitle,
-              decoration: const InputDecoration(
-                  hintText: "Title",
-                  hintStyle: TextStyle(fontSize: 18, letterSpacing: 0.5),
-                  counterText: "",
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                    ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                    ),
-                  )),
-            ),
+    return WillPopScope(
+      onWillPop: () async {
+        if(!readOnlyState){
+          if (checkErrors().isEmpty) {
+            _updateNote().then((v) => {
+              widget.refreshHome(),
+              Navigator.of(context).pop()
+            });
+          } else {
+            showAlertDialogErrors(context);
+          }
+        }
+        return true;
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.save_outlined),
+                tooltip: 'Save',
+                onPressed: () {
+                  if(!readOnlyState){
+                    if (checkErrors().isEmpty) {
+                      _updateNote().then((v) => {
+                        widget.refreshHome(),
+                        Navigator.of(context).pop()
+                      });
+                    } else {
+                      showAlertDialogErrors(context);
+                    }
+                  }
+                },
+              ),
+            ],
           ),
-          Padding(
+          body: ListView(children: [
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: DetectableTextField(
-                readOnly: readOnlyState,
+              child: TextField(
                 minLines: 1,
-                maxLines: null,
-                maxLength: 2000,
+                maxLines: 2,
+                maxLength: 300,
+                style: const TextStyle(fontSize: 18),
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 textCapitalization: TextCapitalization.sentences,
-                controller: controllerNoteText,
-                detectionRegExp: RegExp(
-                  "(?!\\n)(?:^|\\s)([#@]([$detectionContentLetters]+))|$urlRegexContent",
-                  multiLine: true,
-                ),
-                onDetectionTyped: (text) {
-                  readOnlyState ? _launchUrl(text) : null;
-                },
-                basicStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-                decoratedStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.blue,
-                ),
+                controller: controllerNoteTitle,
                 decoration: const InputDecoration(
+                    hintText: "Title",
+                    hintStyle: TextStyle(fontSize: 18, letterSpacing: 0.5),
                     counterText: "",
-                    fillColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hintText: "Note",
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
                     focusedBorder: OutlineInputBorder(
@@ -220,10 +148,73 @@ class _EditNoteState extends State<EditNote> {
                         color: Colors.transparent,
                       ),
                     )),
-              )),
-          const SizedBox(
-            height: 50,
-          ),
-        ]));
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: DetectableTextField(
+                  readOnly: readOnlyState,
+                  minLines: 1,
+                  maxLines: null,
+                  maxLength: 2000,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  textCapitalization: TextCapitalization.sentences,
+                  controller: controllerNoteText,
+                  detectionRegExp: RegExp(
+                    "(?!\\n)(?:^|\\s)([#@]([$detectionContentLetters]+))|$urlRegexContent",
+                    multiLine: true,
+                  ),
+                  onDetectionTyped: (text) {
+                    readOnlyState ? _launchUrl(text) : null;
+                  },
+                  basicStyle: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  decoratedStyle: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.blue,
+                  ),
+                  decoration: const InputDecoration(
+                      counterText: "",
+                      fillColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hintText: "Note",
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                        ),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                        ),
+                      )),
+                )),
+            const SizedBox(
+              height: 50,
+            ),
+          ]),
+          floatingActionButton: readOnlyState
+              ? FloatingActionButton(
+                  onPressed: () {
+                    setState(() {
+                      readOnlyState = !readOnlyState;
+                    });
+                  },
+                  child: const Icon(
+                    Icons.edit_outlined,
+                  ),
+                )
+              : null),
+    );
   }
 }

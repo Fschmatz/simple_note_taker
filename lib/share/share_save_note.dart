@@ -154,7 +154,6 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
                   minLines: 1,
                   maxLines: null,
                   maxLength: 2000,
-                  autofocus: true,
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   textCapitalization: TextCapitalization.sentences,
                   controller: controllerNoteText,
