@@ -83,12 +83,10 @@ class _EditNoteState extends State<EditNote> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if(!readOnlyState){
+        if (!readOnlyState) {
           if (checkErrors().isEmpty) {
-            _updateNote().then((v) => {
-              widget.refreshHome(),
-              Navigator.of(context).pop()
-            });
+            _updateNote().then(
+                (v) => {widget.refreshHome(), Navigator.of(context).pop()});
           } else {
             showAlertDialogErrors(context);
           }
@@ -98,28 +96,31 @@ class _EditNoteState extends State<EditNote> {
       child: Scaffold(
           appBar: AppBar(
             actions: [
-              IconButton(
-                icon: const Icon(Icons.save_outlined),
-                tooltip: 'Save',
-                onPressed: () {
-                  if(!readOnlyState){
-                    if (checkErrors().isEmpty) {
-                      _updateNote().then((v) => {
-                        widget.refreshHome(),
-                        Navigator.of(context).pop()
-                      });
-                    } else {
-                      showAlertDialogErrors(context);
-                    }
-                  }
-                },
-              ),
+              !readOnlyState
+                  ? IconButton(
+                      icon: const Icon(Icons.save_outlined),
+                      tooltip: 'Save',
+                      onPressed: () {
+                        if (!readOnlyState) {
+                          if (checkErrors().isEmpty) {
+                            _updateNote().then((v) => {
+                                  widget.refreshHome(),
+                                  Navigator.of(context).pop()
+                                });
+                          } else {
+                            showAlertDialogErrors(context);
+                          }
+                        }
+                      },
+                    )
+                  : const SizedBox.shrink(),
             ],
           ),
           body: ListView(children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
+                readOnly: readOnlyState,
                 minLines: 1,
                 maxLines: 2,
                 maxLength: 300,

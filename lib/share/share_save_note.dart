@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../app.dart';
+import '../class/init_data.dart';
 import '../db/note_dao.dart';
 
 class ShareSaveNote extends StatefulWidget {
@@ -11,8 +12,9 @@ class ShareSaveNote extends StatefulWidget {
   _ShareSaveNoteState createState() => _ShareSaveNoteState();
 
   String? sharedText = "";
+  bool outsideMemory;
 
-  ShareSaveNote({Key? key, this.sharedText}) : super(key: key);
+  ShareSaveNote({Key? key, this.sharedText, required this.outsideMemory}) : super(key: key);
 }
 
 class _ShareSaveNoteState extends State<ShareSaveNote> {
@@ -99,6 +101,11 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
                   tooltip: 'Save',
                   onPressed: () {
                     if (checkErrors().isEmpty) {
+                      if(widget.outsideMemory){
+                        //save the last link who came from outside
+                        InitData initData = InitData('', '');
+                        initData.saveToPrefs(widget.sharedText!);
+                      }
                       _saveNote().then((v) => {
                             Navigator.pushAndRemoveUntil(
                                 context,

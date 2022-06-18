@@ -20,16 +20,11 @@ class _NoteListState extends State<NoteList> {
 
   @override
   void initState() {
-    getAllNotes(false);
+    getAllNotes();
     super.initState();
   }
 
-  void getAllNotes([bool refresh = true]) async {
-    if (refresh) {
-      setState(() {
-        loading = true;
-      });
-    }
+  void getAllNotes() async {
     var resp = await dbNotes.queryAllRowsDescArchive(widget.archivedValue);
     setState(() {
       loading = false;
@@ -40,37 +35,34 @@ class _NoteListState extends State<NoteList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 600),
-          child: loading
-              ? const Center(child: SizedBox.shrink())
-              : ListView(
-                  children: [
-                    ListView.separated(
-                      separatorBuilder: (BuildContext context, int index) => const Divider(),
-                      physics: const ScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: notesList.length,
-                      itemBuilder: (context, int index) {
-                        return NoteTile(
-                          key: UniqueKey(),
-                          refreshHome: getAllNotes,
-                          index: index,
-                          note: Note(
-                            idNote: notesList[index]['id_note'],
-                            title: notesList[index]['title'],
-                            text: notesList[index]['text'],
-                            archived: notesList[index]['archived'],
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    )
-                  ],
-                ),
-        ),
+        body: loading
+            ? const Center(child: SizedBox.shrink())
+            : ListView(
+                children: [
+                  ListView.separated(
+                    separatorBuilder: (BuildContext context, int index) => const Divider(),
+                    physics: const ScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: notesList.length,
+                    itemBuilder: (context, int index) {
+                      return NoteTile(
+                        key: UniqueKey(),
+                        refreshHome: getAllNotes,
+                        index: index,
+                        note: Note(
+                          idNote: notesList[index]['id_note'],
+                          title: notesList[index]['title'],
+                          text: notesList[index]['text'],
+                          archived: notesList[index]['archived'],
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  )
+                ],
+              ),
         floatingActionButton: widget.archivedValue == 0
             ? FloatingActionButton(
                 onPressed: () {

@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_note_taker/pages/note_list.dart';
 import 'configs/settings_page.dart';
@@ -59,7 +60,15 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
               ),
             ];
           },
-          body: _tabs[_currentTabIndex]),
+          body: PageTransitionSwitcher(
+              transitionBuilder: (child, animation, secondaryAnimation) =>
+                  FadeThroughTransition(
+                    fillColor: Theme.of(context).scaffoldBackgroundColor,
+                    animation: animation,
+                    secondaryAnimation: secondaryAnimation,
+                    child: child,
+                  ),
+              child: _tabs[_currentTabIndex])),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentTabIndex,
         onDestinationSelected: (index) {
