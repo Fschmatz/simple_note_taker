@@ -36,7 +36,6 @@ dependencies:
   easy_dynamic_theme:
   sqflite:
   path_provider:
-  ##receive_sharing_intent: ^1.4.5
   linkwell:
   detectable_text_field: ^2.0.3
   animations: ^2.0.3

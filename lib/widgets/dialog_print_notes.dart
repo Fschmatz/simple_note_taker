@@ -36,6 +36,7 @@ class _DialogPrintNotesState extends State<DialogPrintNotes> {
       } else {
         formattedList += "\n• " + _listNotes[i]['title'] + "\n";
       }
+      formattedList += "\n---------------\n";
     }
 
     formattedList += '\n\nARCHIVE - ' + _listArchive.length.toString() + ' \n';
@@ -46,6 +47,7 @@ class _DialogPrintNotesState extends State<DialogPrintNotes> {
       } else {
         formattedList += "\n• " + _listArchive[i]['title'] + "\n";
       }
+      formattedList += "\n---------------\n";
     }
 
     setState(() {
