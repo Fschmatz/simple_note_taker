@@ -7,17 +7,18 @@ import '../app.dart';
 import '../class/init_data.dart';
 import '../db/note_dao.dart';
 
-class ShareSaveNote extends StatefulWidget {
+class SaveSharedNote extends StatefulWidget {
   @override
-  _ShareSaveNoteState createState() => _ShareSaveNoteState();
+  _SaveSharedNoteState createState() => _SaveSharedNoteState();
 
   String? sharedText = "";
   bool outsideMemory;
 
-  ShareSaveNote({Key? key, this.sharedText, required this.outsideMemory}) : super(key: key);
+  SaveSharedNote({Key? key, this.sharedText, required this.outsideMemory})
+      : super(key: key);
 }
 
-class _ShareSaveNoteState extends State<ShareSaveNote> {
+class _SaveSharedNoteState extends State<SaveSharedNote> {
   TextEditingController controllerNoteTitle = TextEditingController();
   TextEditingController controllerNoteText = TextEditingController();
 
@@ -101,19 +102,12 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
                   tooltip: 'Save',
                   onPressed: () {
                     if (checkErrors().isEmpty) {
-                      if(widget.outsideMemory){
+                      if (widget.outsideMemory) {
                         //save the last link who came from outside
                         InitData initData = InitData('', '');
                         initData.saveToPrefs(widget.sharedText!);
                       }
-                      _saveNote().then((v) => {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        const App()),
-                                ModalRoute.withName('/'))
-                          });
+                      _saveNote().then((_) => {SystemNavigator.pop()});
                     } else {
                       showAlertDialogErrors(context);
                     }
@@ -137,7 +131,7 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
                       hintStyle: TextStyle(fontSize: 18),
                       counterText: "",
                       contentPadding:
-                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
+                          EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Colors.transparent,
@@ -157,7 +151,7 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child:  DetectableTextField(
+                child: DetectableTextField(
                   minLines: 1,
                   maxLines: null,
                   maxLength: 2000,
@@ -172,7 +166,7 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                   ),
-                  decoratedStyle : const TextStyle(
+                  decoratedStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Colors.blue,
@@ -183,7 +177,7 @@ class _ShareSaveNoteState extends State<ShareSaveNote> {
                       focusColor: Colors.transparent,
                       hintText: "Note",
                       contentPadding:
-                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
+                          EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Colors.transparent,

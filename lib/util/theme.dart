@@ -32,7 +32,7 @@ ThemeData light = ThemeData(
       focusColor: const Color(0xFF02836A),
       focusedBorder: OutlineInputBorder(
         borderSide: const BorderSide(
-          color: const Color(0xFF02836A),
+          color: Color(0xFF02836A),
         ),
         borderRadius: BorderRadius.circular(8.0),
       ),
@@ -55,7 +55,7 @@ ThemeData light = ThemeData(
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: Color(0xFFD5E6E2),
-    selectedItemColor: const Color(0xFF02836A),
+    selectedItemColor: Color(0xFF02836A),
   ),
   bottomAppBarColor: const Color(0xFFD5E6E2),
   navigationBarTheme: NavigationBarThemeData(
@@ -74,10 +74,10 @@ ThemeData dark = ThemeData(
     titleMedium: TextStyle(fontWeight: FontWeight.w400),
   ),
   brightness: Brightness.dark,
-  primaryColor: const Color(0xFF202123),
-  scaffoldBackgroundColor: const Color(0xFF202123),
+  primaryColor: const Color(0xFF1B1B1D),
+  scaffoldBackgroundColor: const Color(0xFF1B1B1D),
   colorScheme: const ColorScheme.dark(
-    background: Color(0xFF202123),
+    background: Color(0xFF1B1B1D),
     primary: Color(0xFF5DDBBD),
     onPrimary: Color(0xFF00382C),
     secondary: Color(0xFF5DDBBD),
@@ -86,17 +86,17 @@ ThemeData dark = ThemeData(
     backgroundColor: Color(0xFF5DDBBD),
   ),
   appBarTheme: const AppBarTheme(
-    surfaceTintColor: Color(0xFF202123),
-    color: Color(0xFF202123),
+    surfaceTintColor: Color(0xFF1B1B1D),
+    color: Color(0xFF1B1B1D),
   ),
   cardTheme: const CardTheme(
     color: Color(0xFF242628),
   ),
   dialogTheme: const DialogTheme(
-    backgroundColor: Color(0xFF202123),
+    backgroundColor: Color(0xFF1B1B1D),
   ),
   bottomSheetTheme: const BottomSheetThemeData(
-    backgroundColor: Color(0xFF202123),
+    backgroundColor: Color(0xFF1B1B1D),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
@@ -121,12 +121,12 @@ ThemeData dark = ThemeData(
           ),
           borderRadius: BorderRadius.circular(8.0))),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    backgroundColor: Color(0xFF292A2C),
+    backgroundColor: Color(0xFF292A2D),
   ),
-  bottomAppBarColor: const Color(0xFF292A2C),
+  bottomAppBarColor: const Color(0xFF292A2D),
   navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: const Color(0xFF292A2C), //0xFF202123
-      indicatorColor: const Color(0xFF367A6F),
+      backgroundColor: const Color(0xFF292A2D), //0xFF1B1B1D
+      indicatorColor: const Color(0xFF3C6062),
       iconTheme: MaterialStateProperty.all(const IconThemeData(
         color: Color(0xFFE0E3E1),
       )),
