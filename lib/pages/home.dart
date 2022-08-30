@@ -10,10 +10,7 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
-
-  @override
-  bool get wantKeepAlive => true;
+class _HomeState extends State<Home>{
 
   int _currentTabIndex = 0;
   final List<Widget> _tabs = [

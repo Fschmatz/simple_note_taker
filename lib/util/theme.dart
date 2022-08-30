@@ -24,8 +24,16 @@ ThemeData light = ThemeData(
     surfaceTintColor: Color(0xFFFAFDFA),
     color: Color(0xFFFAFDFA),
   ),
-  cardTheme: const CardTheme(
-    color: Color(0xFFFAFDFA),
+  cardTheme: CardTheme(
+    surfaceTintColor: const Color(0xFFFAFDFA),
+    color: const Color(0xFFFAFDFA),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12), // if you need this
+      side: BorderSide(
+        color: Colors.grey.withOpacity(0.2),
+        width: 1,
+      ),
+    ),
   ),
   inputDecorationTheme: InputDecorationTheme(
       fillColor: const Color(0xFFFAFDFA),
@@ -89,8 +97,16 @@ ThemeData dark = ThemeData(
     surfaceTintColor: Color(0xFF1B1B1D),
     color: Color(0xFF1B1B1D),
   ),
-  cardTheme: const CardTheme(
-    color: Color(0xFF242628),
+  cardTheme: CardTheme(
+    surfaceTintColor: const Color(0xFF1B1B1D),
+    color: const Color(0xFF1B1B1D),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12), // if you need this
+      side: BorderSide(
+        color: Colors.grey.withOpacity(0.2),
+        width: 1,
+      ),
+    ),
   ),
   dialogTheme: const DialogTheme(
     backgroundColor: Color(0xFF1B1B1D),

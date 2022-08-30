@@ -20,15 +20,14 @@ class _NoteListState extends State<NoteList> {
 
   @override
   void initState() {
-    getAllNotes();
     super.initState();
+    getAllNotes();
   }
 
   void getAllNotes() async {
-    var resp = await dbNotes.queryAllRowsDescArchive(widget.archivedValue);
+    notesList = await dbNotes.queryAllRowsDescArchive(widget.archivedValue);
     setState(() {
       loading = false;
-      notesList = resp;
     });
   }
 
@@ -39,8 +38,8 @@ class _NoteListState extends State<NoteList> {
             ? const Center(child: SizedBox.shrink())
             : ListView(
                 children: [
-                  ListView.separated(
-                    separatorBuilder: (BuildContext context, int index) => const Divider(),
+                  ListView.builder(
+                    //separatorBuilder: (BuildContext context, int index) => const Divider(),
                     physics: const ScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: notesList.length,
@@ -59,7 +58,7 @@ class _NoteListState extends State<NoteList> {
                     },
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 75,
                   )
                 ],
               ),

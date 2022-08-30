@@ -15,19 +15,15 @@ const String showDataRoute = "share";
 Future<InitData> init() async {
   String sharedText = "";
   String routeName = homeRoute;
-  ShareHandlerPlatform handler = ShareHandlerPlatform.instance;
-
-  InitData loadInitData = InitData('', '');
-  String? lastSave = await loadInitData.loadFromPrefs();
-
-  //app not in memory
+  final handler = ShareHandlerPlatform.instance;
   SharedMedia? sharedValue = await handler.getInitialSharedMedia();
 
-  if (sharedValue != null && sharedValue.content.toString() != lastSave) {
-    sharedText = sharedValue.content.toString();
+  if (sharedValue != null) {
+    sharedText = sharedValue.content!;
     routeName = showDataRoute;
     handler.resetInitialSharedMedia();
   }
+
   return InitData(sharedText, routeName);
 }
 

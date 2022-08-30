@@ -30,10 +30,8 @@ class _StartAppRoutesState extends State<StartAppRoutes> {
   //app in memory
   Future<void> initPlatformState() async {
     final handler = ShareHandlerPlatform.instance;
-    media = await handler.getInitialSharedMedia();
 
     handler.sharedMediaStream.listen((SharedMedia media) {
-      if (!mounted) return;
       _navKey.currentState!.pushNamed(
         showDataRoute,
         arguments: ShowDataArgument(media.content.toString()),
@@ -60,13 +58,11 @@ class _StartAppRoutesState extends State<StartAppRoutes> {
                 return MaterialPageRoute(
                     builder: (_) => SaveSharedNote(
                       sharedText: args.sharedText,
-                      outsideMemory: false,
                     ));
               } else {
                 return MaterialPageRoute(
                     builder: (_) => SaveSharedNote(
                       sharedText: widget.initData.sharedText,
-                      outsideMemory: true,
                     ));
               }
             }

@@ -140,25 +140,36 @@ class _NoteTileState extends State<NoteTile> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: openEditPage,
-      onLongPress: openBottomMenu,
-      title: Text(
-        widget.note.title,
+    return Padding(
+      padding:  const EdgeInsets.fromLTRB(16, 5, 16, 5),
+      child: ListTile(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12), // if you need this
+          side: BorderSide(
+            color: Colors.grey.withOpacity(0.2),
+            width: 1,
+          ),
+        ),
+        onTap: openEditPage,
+        onLongPress: openBottomMenu,
+        contentPadding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+        title: Text(
+          widget.note.title,
+        ),
+        subtitle: widget.note.text.isNotEmpty
+            ? Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(widget.note.text,
+                    maxLines: 3,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .color!
+                            .withOpacity(0.7))))
+            : null,
       ),
-      subtitle: widget.note.text.isNotEmpty
-          ? Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Text(widget.note.text,
-                  maxLines: 3,
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Theme.of(context)
-                          .textTheme
-                          .headline6!
-                          .color!
-                          .withOpacity(0.7))))
-          : null,
     );
   }
 }

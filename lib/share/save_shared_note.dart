@@ -2,9 +2,6 @@ import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../app.dart';
-import '../class/init_data.dart';
 import '../db/note_dao.dart';
 
 class SaveSharedNote extends StatefulWidget {
@@ -12,9 +9,8 @@ class SaveSharedNote extends StatefulWidget {
   _SaveSharedNoteState createState() => _SaveSharedNoteState();
 
   String? sharedText = "";
-  bool outsideMemory;
 
-  SaveSharedNote({Key? key, this.sharedText, required this.outsideMemory})
+  SaveSharedNote({Key? key, this.sharedText})
       : super(key: key);
 }
 
@@ -102,11 +98,6 @@ class _SaveSharedNoteState extends State<SaveSharedNote> {
                   tooltip: 'Save',
                   onPressed: () {
                     if (checkErrors().isEmpty) {
-                      if (widget.outsideMemory) {
-                        //save the last link who came from outside
-                        InitData initData = InitData('', '');
-                        initData.saveToPrefs(widget.sharedText!);
-                      }
                       _saveNote().then((_) => {SystemNavigator.pop()});
                     } else {
                       showAlertDialogErrors(context);

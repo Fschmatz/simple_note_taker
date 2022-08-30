@@ -1,12 +1,13 @@
 class AppDetails{
 
-  static String appVersion = "1.3.1";
+  static String appVersion = "1.3.2";
   static String appName = "Simple Note Taker Fschmatz";
   static String repositoryLink = "https://github.com/Fschmatz/simple_note_taker";
 
   static String changelogCurrent = '''  
-1.3.1
+1.3.2
 - Share Handler
+- UI changes
 - Bug fixes
 ''';
 
