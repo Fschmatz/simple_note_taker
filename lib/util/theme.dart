@@ -8,11 +8,12 @@ ThemeData light = ThemeData(
   brightness: Brightness.light,
   primaryColor: const Color(0xFFFAFDFA),
   scaffoldBackgroundColor: const Color(0xFFFAFDFA),
-  colorScheme: const ColorScheme.light(
-    background: Color(0xFFFFFFFF),
-    primary: Color(0xFF02836A),
-    onPrimary: Color(0xFFFFFFFF),
+  colorScheme: ColorScheme.light(
+    background: const Color(0xFFFFFFFF),
+    primary: const Color(0xFF02836A),
+    onPrimary: const Color(0xFFFFFFFF),
     secondary: Colors.teal,
+    outline:  Colors.grey.withOpacity(0.3),
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
     backgroundColor: Color(0xFF02836A),
@@ -28,7 +29,7 @@ ThemeData light = ThemeData(
     surfaceTintColor: const Color(0xFFFAFDFA),
     color: const Color(0xFFFAFDFA),
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12), // if you need this
+      borderRadius: BorderRadius.circular(12),
       side: BorderSide(
         color: Colors.grey.withOpacity(0.2),
         width: 1,
@@ -89,6 +90,7 @@ ThemeData dark = ThemeData(
     primary: Color(0xFF5DDBBD),
     onPrimary: Color(0xFF00382C),
     secondary: Color(0xFF5DDBBD),
+    outline: Color(0xFF4D5250),
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
     backgroundColor: Color(0xFF5DDBBD),
