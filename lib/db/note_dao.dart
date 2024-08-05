@@ -10,10 +10,11 @@ class NoteDao {
   static const _databaseVersion = 1;
 
   static const table = 'notes';
-  static const columnIdNote = 'id_note';
+  static const columnId = 'id';
   static const columnTitle = 'title';
   static const columnText = 'text';
   static const columnArchived = 'archived';
+  static const columnCreationDate = 'creationDate';
 
   static Database? _database;
   Future<Database> get database async =>
@@ -33,10 +34,11 @@ class NoteDao {
   Future _onCreate(Database db, int version) async {
     await db.execute('''
           CREATE TABLE $table (
-            $columnIdNote INTEGER PRIMARY KEY,
+            $columnId INTEGER PRIMARY KEY,
             $columnTitle TEXT NOT NULL,
             $columnText TEXT,
-            $columnArchived INTEGER NOT NULL   
+            $columnArchived INTEGER NOT NULL,
+            $columnCreationDate TEXT NOT NULL  
           )
           ''');
   }
@@ -48,12 +50,12 @@ class NoteDao {
 
   Future<List<Map<String, dynamic>>> queryAllRowsDesc() async {
     Database db = await instance.database;
-    return await db.rawQuery('SELECT * FROM $table ORDER BY id_note DESC');
+    return await db.rawQuery('SELECT * FROM $table ORDER BY id DESC');
   }
 
-  Future<List<Map<String, dynamic>>> queryAllRowsDescArchive(int archivedValue) async {
+  Future<List<Map<String, dynamic>>> queryAllRowsDescByArchivedValue(int archivedValue) async {
     Database db = await instance.database;
-    return await db.rawQuery('SELECT * FROM $table WHERE $columnArchived = $archivedValue ORDER BY id_note DESC');
+    return await db.rawQuery('SELECT * FROM $table WHERE $columnArchived = $archivedValue ORDER BY id DESC');
   }
 
   Future<int> insert(Map<String, dynamic> row) async {
@@ -63,13 +65,18 @@ class NoteDao {
 
   Future<int> update(Map<String, dynamic> row) async {
     Database db = await instance.database;
-    int id = row[columnIdNote];
-    return await db.update(table, row, where: '$columnIdNote = ?', whereArgs: [id]);
+    int id = row[columnId];
+    return await db.update(table, row, where: '$columnId = ?', whereArgs: [id]);
   }
 
   Future<int> delete(int id) async {
     Database db = await instance.database;
-    return await db.delete(table, where: '$columnIdNote = ?', whereArgs: [id]);
+    return await db.delete(table, where: '$columnId = ?', whereArgs: [id]);
+  }
+
+  Future<int> deleteAll() async {
+    Database db = await instance.database;
+    return await db.delete(table);
   }
 
 }

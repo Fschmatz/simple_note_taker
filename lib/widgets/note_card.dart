@@ -1,35 +1,34 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:linkwell/linkwell.dart';
 import 'package:share/share.dart';
-import 'package:simple_note_taker/db/note_controller.dart';
 import '../class/note.dart';
 import '../pages/edit_note.dart';
+import '../service/note_service.dart';
 
-class NoteTile extends StatefulWidget {
+class NoteCard extends StatefulWidget {
   @override
-  _NoteTileState createState() => _NoteTileState();
+  _NoteCardState createState() => _NoteCardState();
 
   Note note;
   int index;
   Function() refreshHome;
 
-  NoteTile(
-      {Key? key,
-      required this.note,
-      required this.index,
-      required this.refreshHome})
-      : super(key: key);
+  NoteCard({Key? key, required this.note, required this.index, required this.refreshHome}) : super(key: key);
 }
 
-class _NoteTileState extends State<NoteTile> {
+class _NoteCardState extends State<NoteCard> {
+  NoteService noteService = NoteService();
 
   Future<void> _deleteNote() async {
-    deleteNote(widget.note.idNote);
+    noteService.delete(widget.note.id!);
   }
 
   Future<void> _archiveNote() async {
-    archiveNote(widget.note.idNote, widget.note.archived == 0 ? 1 : 0);
+    noteService.archiveNote(widget.note.id!);
+  }
+
+  Future<void> _unarchiveNote() async {
+    noteService.unarchiveNote(widget.note.id!);
   }
 
   void openEditPage() {
@@ -44,6 +43,8 @@ class _NoteTileState extends State<NoteTile> {
   }
 
   void openBottomMenu() {
+    bool notArchived = widget.note.archived == 0;
+
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -52,22 +53,16 @@ class _NoteTileState extends State<NoteTile> {
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: Wrap(
                 children: <Widget>[
-                  /*ListTile(
-                    leading: const Icon(Icons.edit_outlined),
-                    title: const Text(
-                      "Edit",
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      openEditPage();
-                    },
-                  ),
-                  const Divider(),*/
                   ListTile(
-                    leading: widget.note.archived == 0
-                        ? const Icon(Icons.archive_outlined)
-                        : const Icon(Icons.unarchive_outlined),
-                    title: widget.note.archived == 0
+                    title: const Text(
+                      "Created at: ",
+                    ),
+                    trailing: Text(widget.note.formattedCreationDate, style: const TextStyle(fontSize: 14)),
+                  ),
+                  const Divider(),
+                  ListTile(
+                    leading: notArchived ? const Icon(Icons.archive_outlined) : const Icon(Icons.unarchive_outlined),
+                    title: notArchived
                         ? const Text(
                             "Archive",
                           )
@@ -75,12 +70,16 @@ class _NoteTileState extends State<NoteTile> {
                             "Unarchive",
                           ),
                     onTap: () {
-                      _archiveNote();
+                      if (notArchived) {
+                        _archiveNote();
+                      } else {
+                        _unarchiveNote();
+                      }
+
                       widget.refreshHome();
                       Navigator.of(context).pop();
                     },
                   ),
-                  const Divider(),
                   ListTile(
                     leading: const Icon(Icons.share_outlined),
                     title: const Text(
@@ -88,10 +87,9 @@ class _NoteTileState extends State<NoteTile> {
                     ),
                     onTap: () {
                       Navigator.of(context).pop();
-                      Share.share(widget.note.title + "\n" + widget.note.text);
+                      Share.share(widget.note.title! + "\n" + widget.note.text!);
                     },
                   ),
-                  const Divider(),
                   ListTile(
                     leading: const Icon(Icons.delete_outline_outlined),
                     title: const Text(
@@ -140,33 +138,21 @@ class _NoteTileState extends State<NoteTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:  const EdgeInsets.fromLTRB(8, 6, 8, 6),
+    final theme = Theme.of(context);
+
+    return Card.outlined(
+      margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: ListTile(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: BorderSide(
-            color: Theme.of(context).colorScheme.outline
-          ),
         ),
         onTap: openEditPage,
         onLongPress: openBottomMenu,
-        contentPadding: const EdgeInsets.fromLTRB(16, 6, 16, 6),
         title: Text(
-          widget.note.title,
+          widget.note.title!,
         ),
-        subtitle: widget.note.text.isNotEmpty
-            ? Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Text(widget.note.text,
-                    maxLines: 3,
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context)
-                            .textTheme
-                            .headline6!
-                            .color!
-                            .withOpacity(0.7))))
+        subtitle: widget.note.text!.isNotEmpty
+            ? Text(widget.note.text!, maxLines: 5, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 14, color: theme.hintColor))
             : null,
       ),
     );

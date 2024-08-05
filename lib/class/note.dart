@@ -1,15 +1,23 @@
-class Note{
+import 'package:jiffy/jiffy.dart';
 
-  int idNote;
-  String title;
-  String text;
-  int archived;
+class Note {
+  int? id;
+  String? title;
+  String? text;
+  int? archived;
+  String? creationDate;
 
-  Note({
-    required this.idNote,
-    required this.title,
-    required this.text,
-    required this.archived
-   });
+  Note({this.id, this.title, this.text, this.archived, this.creationDate});
 
+  String get formattedCreationDate => Jiffy.parse(creationDate!).format(pattern: 'dd/MM/yyyy');
+
+  factory Note.fromMap(Map<String, dynamic> map) {
+    return Note(
+      id: map['id'],
+      title: map['title'],
+      text: map['text'],
+      archived: map['archived'],
+      creationDate: map['creationDate'],
+    );
+  }
 }

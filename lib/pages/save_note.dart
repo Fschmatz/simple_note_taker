@@ -2,8 +2,9 @@ import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:simple_note_taker/db/note_controller.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../class/note.dart';
+import '../service/note_service.dart';
 
 class SaveNote extends StatefulWidget {
   @override
@@ -15,51 +16,18 @@ class SaveNote extends StatefulWidget {
 }
 
 class _SaveNoteState extends State<SaveNote> {
+  NoteService noteService = NoteService();
   TextEditingController controllerNoteTitle = TextEditingController();
   TextEditingController controllerNoteText = TextEditingController();
 
   Future<void> _saveNote() async {
-    saveNote(Note(
-        idNote: 0,
-        title: controllerNoteTitle.text,
-        text: controllerNoteText.text,
-        archived: 0));
-  }
+    Note noteToInsert = Note();
 
-  String checkErrors() {
-    String errors = "";
-    if (controllerNoteTitle.text.isEmpty) {
-      errors += "Insert title\n";
-    }
-    return errors;
-  }
+    noteToInsert.title = controllerNoteTitle.text;
+    noteToInsert.text = controllerNoteText.text.trim();
 
-  showAlertDialogErrors(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            "Error",
-          ),
-          content: Text(
-            checkErrors(),
-          ),
-          actions: [
-            TextButton(
-              child: const Text(
-                "Ok",
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        );
-      },
-    );
+    noteService.insert(noteToInsert);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -71,13 +39,13 @@ class _SaveNoteState extends State<SaveNote> {
               icon: const Icon(Icons.save_outlined),
               tooltip: 'Save',
               onPressed: () {
-                if (checkErrors().isEmpty) {
+                if (controllerNoteTitle.text.isNotEmpty) {
                   _saveNote().then((v) => {
                         widget.refreshHome!(),
                         Navigator.of(context).pop(),
                       });
                 } else {
-                  showAlertDialogErrors(context);
+                  Fluttertoast.showToast(msg: "Insert title");
                 }
               },
             ),
@@ -98,8 +66,7 @@ class _SaveNoteState extends State<SaveNote> {
                   hintText: "Title",
                   hintStyle: TextStyle(fontSize: 18, letterSpacing: 0.5),
                   counterText: "",
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
+                  contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.transparent,
@@ -135,7 +102,7 @@ class _SaveNoteState extends State<SaveNote> {
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
               ),
-              decoratedStyle : const TextStyle(
+              decoratedStyle: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
                 color: Colors.blue,
@@ -145,8 +112,7 @@ class _SaveNoteState extends State<SaveNote> {
                   fillColor: Colors.transparent,
                   focusColor: Colors.transparent,
                   hintText: "Note",
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
+                  contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.transparent,

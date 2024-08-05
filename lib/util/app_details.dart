@@ -1,17 +1,26 @@
 class AppDetails{
 
-  static String appVersion = "1.3.2";
+  static String appVersion = "2.0.1";
   static String appName = "Simple Note Taker Fschmatz";
+  static String appNameHomePage = "Simple Note Taker";
+  static String backupFileName = "backup_simple_note_taker";
   static String repositoryLink = "https://github.com/Fschmatz/simple_note_taker";
 
   static String changelogCurrent = '''  
+2.0.1
+- Monet
+- Flutter 3.19
+- UI changes
+- Bug fixes
+- Backup
+''';
+
+  static String changelogsOld = '''
 1.3.2
 - Share Handler
 - UI changes
 - Bug fixes
-''';
 
-  static String changelogsOld = '''
 1.2.3
 - Save edited note on back
 - UI changes

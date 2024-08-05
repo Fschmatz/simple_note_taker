@@ -1,8 +1,9 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:share_handler/share_handler.dart';
 import 'package:simple_note_taker/share/save_shared_note.dart';
-import 'package:simple_note_taker/util/theme.dart';
 import 'app.dart';
 import 'class/init_data.dart';
 import 'class/show_data_argument.dart';
@@ -24,6 +25,8 @@ class _StartAppRoutesState extends State<StartAppRoutes> {
   @override
   void initState() {
     super.initState();
+
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     initPlatformState();
   }
 
@@ -41,34 +44,43 @@ class _StartAppRoutesState extends State<StartAppRoutes> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: _navKey,
-      debugShowCheckedModeBanner: false,
-      theme: light,
-      darkTheme: dark,
-      themeMode: EasyDynamicTheme.of(context).themeMode,
-      onGenerateRoute: (RouteSettings settings) {
-        switch (settings.name) {
-          case homeRoute:
-            return MaterialPageRoute(builder: (_) => const App());
-          case showDataRoute:
-            {
-              if (settings.arguments != null) {
-                final args = settings.arguments as ShowDataArgument;
-                return MaterialPageRoute(
-                    builder: (_) => SaveSharedNote(
-                      sharedText: args.sharedText,
-                    ));
-              } else {
-                return MaterialPageRoute(
-                    builder: (_) => SaveSharedNote(
-                      sharedText: widget.initData.sharedText,
-                    ));
+    return DynamicColorBuilder(builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+      return MaterialApp(
+        navigatorKey: _navKey,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: lightDynamic,
+          useMaterial3: true,
+        ),
+        darkTheme: ThemeData(
+          colorScheme: darkDynamic,
+          useMaterial3: true,
+        ),
+        themeMode: EasyDynamicTheme.of(context).themeMode,
+        onGenerateRoute: (RouteSettings settings) {
+          switch (settings.name) {
+            case homeRoute:
+              return MaterialPageRoute(builder: (_) => const App());
+            case showDataRoute:
+              {
+                if (settings.arguments != null) {
+                  final args = settings.arguments as ShowDataArgument;
+                  return MaterialPageRoute(
+                      builder: (_) => SaveSharedNote(
+                            sharedText: args.sharedText,
+                          ));
+                } else {
+                  return MaterialPageRoute(
+                      builder: (_) => SaveSharedNote(
+                            sharedText: widget.initData.sharedText,
+                          ));
+                }
               }
-            }
-        }
-      },
-      initialRoute: widget.initData.routeName,
-    );
+          }
+          return null;
+        },
+        initialRoute: widget.initData.routeName,
+      );
+    });
   }
 }

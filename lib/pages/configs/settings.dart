@@ -1,30 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
-import 'package:simple_note_taker/widgets/dialog_print_notes.dart';
 import '../../util/app_details.dart';
+import '../../util/dialog_backup.dart';
 import '../../util/dialog_select_theme.dart';
-import 'app_info_page.dart';
-import 'changelog_page.dart';
+import '../../util/utils.dart';
+import 'app_info.dart';
+import 'changelog.dart';
 
-class SettingsPage extends StatefulWidget {
+class Settings extends StatefulWidget {
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  _SettingsState createState() => _SettingsState();
 
-  const SettingsPage({Key? key}) : super(key: key);
+  Function() refreshHome;
+
+   Settings({Key? key, required this.refreshHome}) : super(key: key);
 }
 
-class _SettingsPageState extends State<SettingsPage> {
-  String getThemeStringFormatted() {
-    String theme = EasyDynamicTheme.of(context)
-        .themeMode
-        .toString()
-        .replaceAll('ThemeMode.', '');
-    if (theme == 'system') {
-      theme = 'system default';
-    }
-    return theme.replaceFirst(theme[0], theme[0].toUpperCase());
-  }
-
+class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     Color themeColorApp = Theme.of(context).colorScheme.primary;
@@ -46,19 +38,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 title: Text(
                   AppDetails.appName + " " + AppDetails.appVersion,
                   textAlign: TextAlign.center,
-                  style:  TextStyle(
-                      fontSize: 17.5,
-                      color: Theme.of(context).colorScheme.onPrimary
-                  ),
+                  style: TextStyle(fontSize: 17.5, color: Theme.of(context).colorScheme.onPrimary),
                 ),
               ),
             ),
             ListTile(
-              title: Text("General",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: themeColorApp)),
+              title: Text("General", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: themeColorApp)),
             ),
             ListTile(
               onTap: () => showDialog(
@@ -71,24 +56,37 @@ class _SettingsPageState extends State<SettingsPage> {
                 "App theme",
               ),
               subtitle: Text(
-                getThemeStringFormatted(),
+                Utils().getThemeStringFormatted(EasyDynamicTheme.of(context).themeMode),
               ),
             ),
             ListTile(
-                leading: const Icon(Icons.print_outlined),
-                title: const Text("Print notes"),
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => DialogPrintNotes(),
-                      fullscreenDialog: true,
-                    ))),
+              title: Text("Backup", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: themeColorApp)),
+            ),
+
             ListTile(
-              title: Text("About",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: themeColorApp)),
+              onTap: () => showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return DialogBackup( isCreateBackup: true,  reloadHomeFunction: widget.refreshHome,);
+                  }),
+              leading: const Icon(Icons.save_outlined),
+              title: const Text(
+                "Backup now",
+              ),
+            ),
+            ListTile(
+              onTap: () => showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return DialogBackup( isCreateBackup: false,  reloadHomeFunction: widget.refreshHome,);
+                  }),
+              leading: const Icon(Icons.settings_backup_restore_outlined),
+              title: const Text(
+                "Restore from backup",
+              ),
+            ),
+            ListTile(
+              title: Text("About", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: themeColorApp)),
             ),
             ListTile(
               leading: const Icon(
@@ -101,7 +99,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => const AppInfoPage(),
+                      builder: (BuildContext context) => const AppInfo(),
                     ));
               },
             ),
@@ -116,7 +114,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => const ChangelogPage(),
+                      builder: (BuildContext context) => const Changelog(),
                     ));
               },
             ),
