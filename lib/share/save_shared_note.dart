@@ -1,5 +1,3 @@
-import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
-import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../db/note_dao.dart';
@@ -71,6 +69,7 @@ class _SaveSharedNoteState extends State<SaveSharedNote> {
 
   @override
   Widget build(BuildContext context) {
+
     final Color? bottomOverlayColor =
         Theme.of(context).bottomNavigationBarTheme.backgroundColor;
     final Color? topOverlayColor =
@@ -142,26 +141,13 @@ class _SaveSharedNoteState extends State<SaveSharedNote> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: DetectableTextField(
+                child: TextField(
                   minLines: 1,
                   maxLines: null,
                   maxLength: 2000,
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   textCapitalization: TextCapitalization.sentences,
                   controller: controllerNoteText,
-                  detectionRegExp: RegExp(
-                    "(?!\\n)(?:^|\\s)([#@]([$detectionContentLetters]+))|$urlRegexContent",
-                    multiLine: true,
-                  ),
-                  basicStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  decoratedStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.blue,
-                  ),
                   decoration: const InputDecoration(
                       counterText: "",
                       fillColor: Colors.transparent,

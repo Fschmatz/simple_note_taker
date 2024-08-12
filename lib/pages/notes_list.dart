@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simple_note_taker/pages/save_note.dart';
+import 'package:simple_note_taker/pages/new_note.dart';
 import 'package:simple_note_taker/service/note_service.dart';
 import '../class/note.dart';
 import '../widgets/note_card.dart';
@@ -59,7 +59,7 @@ class _NotesListState extends State<NotesList> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => SaveNote(
+                  builder: (BuildContext context) => NewNote(
                     refreshHome: loadNotes,
                   ),
                 ));

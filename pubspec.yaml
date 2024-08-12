@@ -1,7 +1,7 @@
 name: simple_note_taker
 description: Flutter project.
 publish_to: 'none'
-version: 2.0.1
+version: 2.0.2
 
 environment:
   sdk: '>=3.2.6 <4.0.0'
@@ -16,7 +16,6 @@ dependencies:
   easy_dynamic_theme:
   sqflite:
   path_provider:
-  linkwell:
   detectable_text_field: ^2.0.3
   share_handler:
   cupertino_icons: ^1.0.2
@@ -24,6 +23,7 @@ dependencies:
   jiffy:
   permission_handler: ^11.3.0
   fluttertoast:
+  file_picker: ^5.0.1
 
 dev_dependencies:
   flutter_test:

@@ -1,24 +1,42 @@
-import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
-import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../class/note.dart';
 import '../service/note_service.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
 
-class SaveNote extends StatefulWidget {
+class NewNote extends StatefulWidget {
   @override
-  _SaveNoteState createState() => _SaveNoteState();
+  _NewNoteState createState() => _NewNoteState();
 
   Function()? refreshHome;
 
-  SaveNote({Key? key, required this.refreshHome}) : super(key: key);
+  NewNote({Key? key, required this.refreshHome}) : super(key: key);
 }
 
-class _SaveNoteState extends State<SaveNote> {
+class _NewNoteState extends State<NewNote> {
   NoteService noteService = NoteService();
   TextEditingController controllerNoteTitle = TextEditingController();
   TextEditingController controllerNoteText = TextEditingController();
+
+  Future<void> _pickAndReadFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['txt'],
+    );
+
+    if (result != null) {
+      String filePath = result.files.single.path!;
+
+      File file = File(filePath);
+      String content = await file.readAsString();
+
+      setState(() {
+        controllerNoteText.text = content;
+      });
+    }
+  }
 
   Future<void> _saveNote() async {
     Note noteToInsert = Note();
@@ -35,6 +53,13 @@ class _SaveNoteState extends State<SaveNote> {
         appBar: AppBar(
           title: const Text('Save Note'),
           actions: [
+            IconButton(
+              icon: const Icon(Icons.file_download_outlined),
+              tooltip: 'Save',
+              onPressed: () {
+                _pickAndReadFile();
+              },
+            ),
             IconButton(
               icon: const Icon(Icons.save_outlined),
               tooltip: 'Save',
@@ -86,7 +111,7 @@ class _SaveNoteState extends State<SaveNote> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: DetectableTextField(
+            child: TextField(
               autofocus: true,
               minLines: 1,
               maxLines: null,
@@ -94,19 +119,6 @@ class _SaveNoteState extends State<SaveNote> {
               maxLengthEnforcement: MaxLengthEnforcement.enforced,
               textCapitalization: TextCapitalization.sentences,
               controller: controllerNoteText,
-              detectionRegExp: RegExp(
-                "(?!\\n)(?:^|\\s)([#@]([$detectionContentLetters]+))|$urlRegexContent",
-                multiLine: true,
-              ),
-              basicStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              ),
-              decoratedStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Colors.blue,
-              ),
               decoration: const InputDecoration(
                   counterText: "",
                   fillColor: Colors.transparent,

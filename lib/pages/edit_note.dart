@@ -3,7 +3,6 @@ import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../class/note.dart';
 import '../service/note_service.dart';
 import '../util/utils.dart';
@@ -133,7 +132,8 @@ class _EditNoteState extends State<EditNote> {
                   textCapitalization: TextCapitalization.sentences,
                   controller: controllerNoteText,
                   detectionRegExp: RegExp(
-                    "(?!\\n)(?:^|\\s)([#@]([$detectionContentLetters]+))|$urlRegexContent",
+                   // "(?!\\n)(?:^|\\s)([#@]([$detectionContentLetters]+))|$urlRegexContent",
+                    r'\b(?:https?://|www\.)\S+\b',
                     multiLine: true,
                   ),
                   onDetectionTyped: (text) {
