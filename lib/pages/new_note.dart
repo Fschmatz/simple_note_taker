@@ -7,12 +7,12 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 
 class NewNote extends StatefulWidget {
+  final Function()? refreshHome;
+
+  const NewNote({Key? key, required this.refreshHome}) : super(key: key);
+
   @override
-  _NewNoteState createState() => _NewNoteState();
-
-  Function()? refreshHome;
-
-  NewNote({Key? key, required this.refreshHome}) : super(key: key);
+  State<NewNote> createState() => _NewNoteState();
 }
 
 class _NewNoteState extends State<NewNote> {

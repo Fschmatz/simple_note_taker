@@ -1,13 +1,13 @@
 class AppDetails{
 
-  static String appVersion = "2.0.2";
+  static String appVersion = "2.0.3";
   static String appName = "Simple Note Taker Fschmatz";
   static String appNameHomePage = "Simple Note Taker";
   static String backupFileName = "backup_simple_note_taker";
   static String repositoryLink = "https://github.com/Fschmatz/simple_note_taker";
 
   static String changelogCurrent = '''  
-2.0.2
+$appVersion
 - Monet
 - Flutter 3.19
 - Import .txt

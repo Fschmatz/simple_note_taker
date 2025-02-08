@@ -6,14 +6,14 @@ import '../db/note_dao.dart';
 import '../util/app_details.dart';
 import '../widgets/note_card.dart';
 
-class ArchivedNotesList extends StatefulWidget {
-  ArchivedNotesList({Key? key}) : super(key: key);
+class Archive extends StatefulWidget {
+  const Archive({Key? key}) : super(key: key);
 
   @override
-  _ArchivedNotesListState createState() => _ArchivedNotesListState();
+  State<Archive> createState() => _ArchiveState();
 }
 
-class _ArchivedNotesListState extends State<ArchivedNotesList> {
+class _ArchiveState extends State<Archive> {
   List<Note> notesList = [];
   bool loading = true;
 
@@ -42,9 +42,7 @@ class _ArchivedNotesListState extends State<ArchivedNotesList> {
           : ListView(
               children: [
                 ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) => const SizedBox(
-                    height: 8,
-                  ),
+                  separatorBuilder: (BuildContext context, int index) => const Divider(),
                   physics: const ScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: notesList.length,

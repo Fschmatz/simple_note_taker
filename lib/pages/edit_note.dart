@@ -8,13 +8,13 @@ import '../service/note_service.dart';
 import '../util/utils.dart';
 
 class EditNote extends StatefulWidget {
+  final Function() refreshHome;
+  final Note note;
+
+  const EditNote({Key? key, required this.refreshHome, required this.note}) : super(key: key);
+
   @override
-  _EditNoteState createState() => _EditNoteState();
-
-  Function() refreshHome;
-  Note note;
-
-  EditNote({Key? key, required this.refreshHome, required this.note}) : super(key: key);
+  State<EditNote> createState() => _EditNoteState();
 }
 
 class _EditNoteState extends State<EditNote> {

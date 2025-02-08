@@ -1,19 +1,19 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import '../class/note.dart';
 import '../pages/edit_note.dart';
 import '../service/note_service.dart';
 
 class NoteCard extends StatefulWidget {
+  final Note note;
+  final int index;
+  final Function() refreshHome;
+
+  const NoteCard({Key? key, required this.note, required this.index, required this.refreshHome}) : super(key: key);
+
   @override
-  _NoteCardState createState() => _NoteCardState();
-
-  Note note;
-  int index;
-  Function() refreshHome;
-
-  NoteCard({Key? key, required this.note, required this.index, required this.refreshHome}) : super(key: key);
+  State<NoteCard> createState() => _NoteCardState();
 }
 
 class _NoteCardState extends State<NoteCard> {
@@ -140,21 +140,15 @@ class _NoteCardState extends State<NoteCard> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Card.outlined(
-      margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-      child: ListTile(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        onTap: openEditPage,
-        onLongPress: openBottomMenu,
-        title: Text(
-          widget.note.title!,
-        ),
-        subtitle: widget.note.text!.isNotEmpty
-            ? Text(widget.note.text!, maxLines: 5, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 14, color: theme.hintColor))
-            : null,
+    return ListTile(
+      onTap: openEditPage,
+      onLongPress: openBottomMenu,
+      title: Text(
+        widget.note.title!,
       ),
+      subtitle: widget.note.text!.isNotEmpty
+          ? Text(widget.note.text!, maxLines: 5, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 14, color: theme.hintColor))
+          : null,
     );
   }
 }

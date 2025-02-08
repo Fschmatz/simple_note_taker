@@ -20,4 +20,15 @@ class Note {
       creationDate: map['creationDate'],
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'text': text,
+      'archived': archived,
+      'creationDate': creationDate,
+    };
+  }
+
 }

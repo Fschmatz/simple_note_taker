@@ -1,48 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:simple_note_taker/pages/archived_notes_list.dart';
-import 'package:simple_note_taker/pages/notes_list.dart';
+import 'package:simple_note_taker/pages/archive.dart';
 import 'package:simple_note_taker/util/app_details.dart';
+import '../class/note.dart';
+import '../service/note_service.dart';
+import '../widgets/note_card.dart';
 import 'configs/settings.dart';
+import 'new_note.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  int _currentTabIndex = 0;
-
-  /* List<Widget> _tabs = [
-    NotesList(
-      key: UniqueKey(),
-      archivedValue: 0,
-    ),
-    NotesList(
-      key: UniqueKey(),
-      archivedValue: 1,
-    ),
-  ];*/
-
-  void refresh() {
-    setState(() {
-      /* _tabs = [
-        NotesList(
-          key: UniqueKey(),
-          archivedValue: 0,
-        ),
-        NotesList(
-          key: UniqueKey(),
-          archivedValue: 1,
-        ),
-      ];*/
-    });
-  }
+  List<Note> notesList = [];
+  bool loading = true;
 
   @override
   void initState() {
     super.initState();
+    _loadNotes();
+  }
+
+  void _loadNotes() async {
+    notesList = await NoteService().queryAllRowsDescByArchivedValue(0);
+
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
@@ -57,7 +44,7 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => ArchivedNotesList(),
+                      builder: (BuildContext context) => const Archive(),
                     ));
               }),
           IconButton(
@@ -69,13 +56,46 @@ class _HomeState extends State<Home> {
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) => Settings(
-                        refreshHome: refresh,
+                        refreshHome: _loadNotes,
                       ),
                     ));
               }),
         ],
       ),
-      body: NotesList(),
+      body: loading
+          ? const Center(child: SizedBox.shrink())
+          : ListView(
+              children: [
+                ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) => const Divider(),
+                  physics: const ScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: notesList.length,
+                  itemBuilder: (context, int index) {
+                    Note note = notesList[index];
+
+                    return NoteCard(key: UniqueKey(), refreshHome: _loadNotes, index: index, note: note);
+                  },
+                ),
+                const SizedBox(
+                  height: 75,
+                )
+              ],
+            ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => NewNote(
+                  refreshHome: _loadNotes,
+                ),
+              ));
+        },
+        child: const Icon(
+          Icons.add_outlined,
+        ),
+      ),
     );
   }
 }

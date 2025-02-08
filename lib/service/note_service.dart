@@ -64,13 +64,18 @@ class NoteService {
     await dbNote.deleteAll();
   }
 
+
+
   Future<void> insertNotesFromRestoreBackup(List<dynamic> jsonData) async {
-    for (dynamic item in jsonData) {
-      await _insertMovieFromBackup(Note.fromMap(item));
-    }
+    List<Map<String, dynamic>> listToInsert = jsonData.map((item) {
+      return Note.fromMap(item).toMap();
+    }).toList();
+
+    await dbNote.insertBatchForBackup(listToInsert);
   }
 
-  Future<void> _insertMovieFromBackup(Note note) async {
+ /*
+   Future<void> _insertMovieFromBackup(Note note) async {
     Map<String, dynamic> row = {
       NoteDao.columnTitle: note.title,
       NoteDao.columnText: note.text,
@@ -80,4 +85,12 @@ class NoteService {
 
     await dbNote.insert(row);
   }
+
+ Future<void> insertNotesFromRestoreBackup(List<dynamic> jsonData) async {
+    for (dynamic item in jsonData) {
+      await _insertMovieFromBackup(Note.fromMap(item));
+    }
+  }
+*/
+
 }
