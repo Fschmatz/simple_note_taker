@@ -22,7 +22,7 @@ class NoteService extends StoreService {
 
     await dbNote.insert(row);
 
-    loadNotes(0);
+    await loadNotes(0);
   }
 
   void update(Note note) async {
@@ -72,5 +72,6 @@ class NoteService extends StoreService {
     }).toList();
 
     await dbNote.insertBatchForBackup(listToInsert);
+    await loadNotes(0);
   }
 }

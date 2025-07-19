@@ -140,11 +140,10 @@ class _NoteCardState extends State<NoteCard> {
     return ListTile(
       onTap: openEditPage,
       onLongPress: openBottomMenu,
-      title: Text(
-        widget.note.title!,
-      ),
+      title:
+          Text(widget.note.title!, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
       subtitle: widget.note.text!.isNotEmpty
-          ? Text(widget.note.text!, maxLines: 5, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 14, color: theme.hintColor))
+          ? Text(widget.note.text!, maxLines: 4, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 14, color: theme.hintColor))
           : null,
     );
   }
