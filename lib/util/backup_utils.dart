@@ -1,25 +1,25 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../service/note_service.dart';
 
 class BackupUtils {
-
   NoteService noteService = NoteService();
 
   /* PER APP SPECIFIC FUNCTIONS */
 
-  Future<List<Map<String, dynamic>>> _loadAllNotes() async  {
-    return noteService.loadAllNotes();
+  Future<List<Map<String, dynamic>>> _loadAllNotes() async {
+    return noteService.loadAllNotesForBackup();
   }
 
-  Future<void> _deleteAllNotes()  async {
+  Future<void> _deleteAllNotes() async {
     await noteService.deleteAllNotes();
   }
 
-  Future<void> _insertNotes(List<dynamic> jsonData)  async {
+  Future<void> _insertNotes(List<dynamic> jsonData) async {
     await noteService.insertNotesFromRestoreBackup(jsonData);
   }
 
@@ -34,7 +34,7 @@ class BackupUtils {
   }
 
   // Always using Android Download folder
-  Future<String> _loadDirectory()  async {
+  Future<String> _loadDirectory() async {
     bool dirDownloadExists = true;
     String directory = "/storage/emulated/0/Download/";
 
@@ -54,7 +54,7 @@ class BackupUtils {
     List<Map<String, dynamic>> list = await _loadAllNotes();
 
     if (list.isNotEmpty) {
-      await _saveListAsJson(list,fileName);
+      await _saveListAsJson(list, fileName);
 
       Fluttertoast.showToast(
         msg: "Backup completed!",
@@ -80,8 +80,8 @@ class BackupUtils {
     }
   }
 
- Future<void> restoreBackupData(String fileName) async {
-   await _loadStoragePermission();
+  Future<void> restoreBackupData(String fileName) async {
+    await _loadStoragePermission();
 
     try {
       String directory = await _loadDirectory();
@@ -102,5 +102,4 @@ class BackupUtils {
       );
     }
   }
-
 }

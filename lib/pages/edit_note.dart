@@ -1,24 +1,20 @@
-import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
-import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
 import '../class/note.dart';
 import '../service/note_service.dart';
-import '../util/utils.dart';
 
 class EditNote extends StatefulWidget {
-  final Function() refreshHome;
-  final Note note;
-
-  const EditNote({Key? key, required this.refreshHome, required this.note}) : super(key: key);
-
   @override
   State<EditNote> createState() => _EditNoteState();
+
+  const EditNote({Key? key, required this.note}) : super(key: key);
+
+  final Note note;
 }
 
 class _EditNoteState extends State<EditNote> {
-  NoteService noteService = NoteService();
   TextEditingController controllerNoteTitle = TextEditingController();
   TextEditingController controllerNoteText = TextEditingController();
   bool readOnly = true;
@@ -28,20 +24,15 @@ class _EditNoteState extends State<EditNote> {
     super.initState();
 
     controllerNoteTitle.text = widget.note.title!;
-    controllerNoteText.text = widget.note.text! + "\n\n\n\n\n\n\n\n\n\n";
+    controllerNoteText.text = widget.note.text! + "\n\n\n\n\n\n\n\n";
   }
 
   Future<void> _updateNote() async {
     Note noteToUpdate = widget.note;
-
     noteToUpdate.title = controllerNoteTitle.text;
     noteToUpdate.text = controllerNoteText.text.trim();
 
-    noteService.update(noteToUpdate);
-  }
-
-  _launchLink(String link) {
-    Utils().launchBrowser(link);
+    NoteService().update(noteToUpdate);
   }
 
   String _formatNoteToCopy() {
@@ -54,7 +45,7 @@ class _EditNoteState extends State<EditNote> {
       onPopInvoked: (didPop) async {
         if (!readOnly) {
           if (controllerNoteTitle.text.isNotEmpty) {
-            _updateNote().then((v) => {widget.refreshHome()});
+            _updateNote();
           } else {
             Fluttertoast.showToast(msg: "Insert title");
           }
@@ -70,7 +61,7 @@ class _EditNoteState extends State<EditNote> {
                       onPressed: () {
                         if (!readOnly) {
                           if (controllerNoteTitle.text.isNotEmpty) {
-                            _updateNote().then((v) => {widget.refreshHome(), Navigator.of(context).pop()});
+                            _updateNote().then((_) => Navigator.of(context).pop());
                           } else {
                             Fluttertoast.showToast(msg: "Insert title");
                           }
@@ -123,7 +114,7 @@ class _EditNoteState extends State<EditNote> {
             ),
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: DetectableTextField(
+                child: TextField(
                   readOnly: readOnly,
                   minLines: 1,
                   maxLines: null,
@@ -131,23 +122,6 @@ class _EditNoteState extends State<EditNote> {
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   textCapitalization: TextCapitalization.sentences,
                   controller: controllerNoteText,
-                  detectionRegExp: RegExp(
-                   // "(?!\\n)(?:^|\\s)([#@]([$detectionContentLetters]+))|$urlRegexContent",
-                    r'\b(?:https?://|www\.)\S+\b',
-                    multiLine: true,
-                  ),
-                  onDetectionTyped: (text) {
-                    readOnly ? _launchLink(text) : null;
-                  },
-                  basicStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  decoratedStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.blue,
-                  ),
                   decoration: const InputDecoration(
                       counterText: "",
                       fillColor: Colors.transparent,

@@ -1,26 +1,26 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+
 import '../class/note.dart';
 import '../pages/edit_note.dart';
 import '../service/note_service.dart';
 
 class NoteCard extends StatefulWidget {
-  final Note note;
-  final int index;
-  final Function() refreshHome;
-
-  const NoteCard({Key? key, required this.note, required this.index, required this.refreshHome}) : super(key: key);
-
   @override
   State<NoteCard> createState() => _NoteCardState();
+
+  const NoteCard({Key? key, required this.note}) : super(key: key);
+
+  final Note note;
 }
 
 class _NoteCardState extends State<NoteCard> {
   NoteService noteService = NoteService();
 
   Future<void> _deleteNote() async {
-    noteService.delete(widget.note.id!);
+    noteService.delete(widget.note);
   }
 
   Future<void> _archiveNote() async {
@@ -37,7 +37,6 @@ class _NoteCardState extends State<NoteCard> {
         MaterialPageRoute(
           builder: (BuildContext context) => EditNote(
             note: widget.note,
-            refreshHome: widget.refreshHome,
           ),
         ));
   }
@@ -76,7 +75,6 @@ class _NoteCardState extends State<NoteCard> {
                         _unarchiveNote();
                       }
 
-                      widget.refreshHome();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -126,7 +124,6 @@ class _NoteCardState extends State<NoteCard> {
               ),
               onPressed: () {
                 _deleteNote();
-                widget.refreshHome();
                 Navigator.of(context).pop();
               },
             )

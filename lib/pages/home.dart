@@ -1,46 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:simple_note_taker/pages/archive.dart';
+import 'package:simple_note_taker/redux/actions.dart';
+import 'package:simple_note_taker/redux/build_context_extension.dart';
 import 'package:simple_note_taker/util/app_details.dart';
+
 import '../class/note.dart';
-import '../service/note_service.dart';
+import '../main.dart';
+import '../redux/selectors.dart';
 import '../widgets/note_card.dart';
 import 'configs/settings.dart';
 import 'new_note.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
-
   @override
   State<Home> createState() => _HomeState();
+
+  const Home({Key? key}) : super(key: key);
 }
 
 class _HomeState extends State<Home> {
   List<Note> notesList = [];
-  bool loading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadNotes();
-  }
-
-  void _loadNotes() async {
-    notesList = await NoteService().queryAllRowsDescByArchivedValue(0);
-
-    setState(() {
-      loading = false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+    notesList = selectNotes(context.state);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppDetails.appNameHomePage),
         actions: [
           IconButton(
               icon: const Icon(Icons.archive_outlined),
-              onPressed: () {
+              onPressed: () async {
+                await store.dispatch(LoadArchiveNotesAction());
+
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -55,41 +48,35 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => Settings(
-                        refreshHome: _loadNotes,
-                      ),
+                      builder: (BuildContext context) => const Settings(),
                     ));
               }),
         ],
       ),
-      body: loading
-          ? const Center(child: SizedBox.shrink())
-          : ListView(
-              children: [
-                ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) => const Divider(),
-                  physics: const ScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: notesList.length,
-                  itemBuilder: (context, int index) {
-                    Note note = notesList[index];
+      body: ListView(
+        children: [
+          ListView.separated(
+            separatorBuilder: (BuildContext context, int index) => const Divider(),
+            physics: const ScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: notesList.length,
+            itemBuilder: (context, int index) {
+              Note note = notesList[index];
 
-                    return NoteCard(key: UniqueKey(), refreshHome: _loadNotes, index: index, note: note);
-                  },
-                ),
-                const SizedBox(
-                  height: 75,
-                )
-              ],
-            ),
+              return NoteCard(key: UniqueKey(), note: note);
+            },
+          ),
+          const SizedBox(
+            height: 75,
+          )
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) => NewNote(
-                  refreshHome: _loadNotes,
-                ),
+                builder: (BuildContext context) => const NewNote(),
               ));
         },
         child: const Icon(

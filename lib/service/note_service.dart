@@ -1,7 +1,9 @@
+import 'package:simple_note_taker/service/store_service.dart';
+
 import '../class/note.dart';
 import '../db/note_dao.dart';
 
-class NoteService {
+class NoteService extends StoreService {
   final dbNote = NoteDao.instance;
 
   Future<List<Note>> queryAllRowsDescByArchivedValue(int archivedValue) async {
@@ -19,23 +21,21 @@ class NoteService {
     };
 
     await dbNote.insert(row);
+
+    loadNotes(0);
   }
 
   void update(Note note) async {
-    Map<String, dynamic> row = {
-      NoteDao.columnId: note.id,
-      NoteDao.columnTitle: note.title,
-      NoteDao.columnText: note.text
-      /*,
-      NoteDao.columnArchived: note.archived,
-      NoteDao.columnCreationDate: note.creationDate*/
-    };
+    Map<String, dynamic> row = {NoteDao.columnId: note.id, NoteDao.columnTitle: note.title, NoteDao.columnText: note.text};
 
     await dbNote.update(row);
+
+    await loadNotes(note.archived!);
   }
 
-  void delete(int idNote) async {
-    await dbNote.delete(idNote);
+  void delete(Note note) async {
+    await dbNote.delete(note.id!);
+    await loadNotes(note.archived!);
   }
 
   void unarchiveNote(int id) async {
@@ -45,6 +45,7 @@ class NoteService {
     };
 
     await dbNote.update(row);
+    await loadAllNotes();
   }
 
   void archiveNote(int id) async {
@@ -54,17 +55,16 @@ class NoteService {
     };
 
     await dbNote.update(row);
+    await loadAllNotes();
   }
 
-  Future<List<Map<String, dynamic>>> loadAllNotes() {
+  Future<List<Map<String, dynamic>>> loadAllNotesForBackup() {
     return dbNote.queryAllRows();
   }
 
   Future<void> deleteAllNotes() async {
     await dbNote.deleteAll();
   }
-
-
 
   Future<void> insertNotesFromRestoreBackup(List<dynamic> jsonData) async {
     List<Map<String, dynamic>> listToInsert = jsonData.map((item) {
@@ -73,24 +73,4 @@ class NoteService {
 
     await dbNote.insertBatchForBackup(listToInsert);
   }
-
- /*
-   Future<void> _insertMovieFromBackup(Note note) async {
-    Map<String, dynamic> row = {
-      NoteDao.columnTitle: note.title,
-      NoteDao.columnText: note.text,
-      NoteDao.columnArchived: note.archived,
-      NoteDao.columnCreationDate: note.creationDate
-    };
-
-    await dbNote.insert(row);
-  }
-
- Future<void> insertNotesFromRestoreBackup(List<dynamic> jsonData) async {
-    for (dynamic item in jsonData) {
-      await _insertMovieFromBackup(Note.fromMap(item));
-    }
-  }
-*/
-
 }

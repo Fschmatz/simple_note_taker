@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:flutter/material.dart';
+
 import '../../util/app_details.dart';
 import '../../util/dialog_backup.dart';
 import '../../util/dialog_select_theme.dart';
@@ -11,9 +12,7 @@ class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
 
-  Function() refreshHome;
-
-   Settings({Key? key, required this.refreshHome}) : super(key: key);
+  const Settings({Key? key}) : super(key: key);
 }
 
 class _SettingsState extends State<Settings> {
@@ -62,12 +61,13 @@ class _SettingsState extends State<Settings> {
             ListTile(
               title: Text("Backup", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: themeColorApp)),
             ),
-
             ListTile(
               onTap: () => showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return DialogBackup( isCreateBackup: true,  reloadHomeFunction: widget.refreshHome,);
+                    return const DialogBackup(
+                      isCreateBackup: true,
+                    );
                   }),
               leading: const Icon(Icons.save_outlined),
               title: const Text(
@@ -78,7 +78,9 @@ class _SettingsState extends State<Settings> {
               onTap: () => showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return DialogBackup( isCreateBackup: false,  reloadHomeFunction: widget.refreshHome,);
+                    return const DialogBackup(
+                      isCreateBackup: false,
+                    );
                   }),
               leading: const Icon(Icons.settings_backup_restore_outlined),
               title: const Text(

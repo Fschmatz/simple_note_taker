@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../db/note_dao.dart';
+
+import '../class/note.dart';
+import '../service/note_service.dart';
 
 class SaveSharedNote extends StatefulWidget {
   @override
-  _SaveSharedNoteState createState() => _SaveSharedNoteState();
+  State<SaveSharedNote> createState() => _SaveSharedNoteState();
 
   String? sharedText = "";
 
-  SaveSharedNote({Key? key, this.sharedText})
-      : super(key: key);
+  SaveSharedNote({Key? key, this.sharedText}) : super(key: key);
 }
 
 class _SaveSharedNoteState extends State<SaveSharedNote> {
@@ -18,19 +19,13 @@ class _SaveSharedNoteState extends State<SaveSharedNote> {
 
   @override
   void initState() {
-    controllerNoteText.text = widget.sharedText!;
     super.initState();
+
+    controllerNoteText.text = widget.sharedText!;
   }
 
   Future<void> _saveNote() async {
-    final dbPlaylist = NoteDao.instance;
-
-    Map<String, dynamic> row = {
-      NoteDao.columnTitle: controllerNoteTitle.text,
-      NoteDao.columnText: controllerNoteText.text,
-      NoteDao.columnArchived: 0,
-    };
-    final id = await dbPlaylist.insert(row);
+    NoteService().insert(Note(title: controllerNoteTitle.text, text: controllerNoteText.text.trim()));
   }
 
   String checkErrors() {
@@ -69,15 +64,9 @@ class _SaveSharedNoteState extends State<SaveSharedNote> {
 
   @override
   Widget build(BuildContext context) {
-
-    final Color? bottomOverlayColor =
-        Theme.of(context).bottomNavigationBarTheme.backgroundColor;
-    final Color? topOverlayColor =
-        Theme.of(context).appBarTheme.backgroundColor;
-    final Brightness iconBrightness =
-        Theme.of(context).brightness == Brightness.light
-            ? Brightness.dark
-            : Brightness.light;
+    final Color? bottomOverlayColor = Theme.of(context).bottomNavigationBarTheme.backgroundColor;
+    final Color? topOverlayColor = Theme.of(context).appBarTheme.backgroundColor;
+    final Brightness iconBrightness = Theme.of(context).brightness == Brightness.light ? Brightness.dark : Brightness.light;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
@@ -96,7 +85,9 @@ class _SaveSharedNoteState extends State<SaveSharedNote> {
                 tooltip: 'Save',
                 onPressed: () {
                   if (checkErrors().isEmpty) {
-                    _saveNote().then((_) => {SystemNavigator.pop()});
+                    _saveNote().then((_) {
+                      SystemNavigator.pop();
+                    });
                   } else {
                     showAlertDialogErrors(context);
                   }
@@ -119,8 +110,7 @@ class _SaveSharedNoteState extends State<SaveSharedNote> {
                     hintText: "Title",
                     hintStyle: TextStyle(fontSize: 18),
                     counterText: "",
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
+                    contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.transparent,
@@ -152,8 +142,7 @@ class _SaveSharedNoteState extends State<SaveSharedNote> {
                     fillColor: Colors.transparent,
                     focusColor: Colors.transparent,
                     hintText: "Note",
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
+                    contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.transparent,
